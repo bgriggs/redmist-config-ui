@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EADE85FE-6449-476B-A8E1-29B5015C9903}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		nuget.config = nuget.config
 		pipeline-ci.yml = pipeline-ci.yml
 		README.md = README.md
 	EndProjectSection
