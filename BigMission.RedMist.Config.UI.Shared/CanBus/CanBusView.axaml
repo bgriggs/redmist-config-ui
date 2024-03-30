@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="450"
+             x:Class="BigMission.RedMist.Config.UI.Shared.CanBus.CanBusView">
+	<DataGrid  BorderThickness="1" BorderBrush="Gray" ItemsSource="{Binding Messages}">
+		<DataGrid.Styles>
+			<Style Selector="DataGridCell TextBlock">
+				<Setter Property="Padding" Value="5,0,5,0"/>
+				<Setter Property="FontSize" Value="12"/>
+				<Setter Property="Height" Value="10"/>
+			</Style>
+		</DataGrid.Styles>
+		<DataGrid.Columns>
+			<DataGridTemplateColumn>
+				<DataGridTemplateColumn.CellTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<Button Classes="icon" ToolTip.Tip="Edit channel" Command="{Binding EditChannelClick}"
+									CommandParameter="{Binding Data}">
+								<Image Source="{StaticResource editicon}"/>
+							</Button>
+							<Button Classes="icon" ToolTip.Tip="Delete channel" Command="{Binding DeleteChannel}"
+									CommandParameter="{Binding Data}">
+								<Image Source="{StaticResource closeicon}"/>
+							</Button>
+						</StackPanel>
+					</DataTemplate>
+				</DataGridTemplateColumn.CellTemplate>
+			</DataGridTemplateColumn>
+			<DataGridTextColumn Header="Enabled"/>
+			<DataGridTextColumn Header="CAN Interface"/>
+			<DataGridTextColumn Header="RX/TX"/>
+			<DataGridTextColumn Header="CAN ID" Binding="{Binding CanId}"/>
+			<DataGridTextColumn Header="Byte 1"/>
+			<DataGridTextColumn Header="Byte 2"/>
+			<DataGridTextColumn Header="Byte 3"/>
+			<DataGridTextColumn Header="Byte 4"/>
+			<DataGridTextColumn Header="Byte 5"/>
+			<DataGridTextColumn Header="Byte 6"/>
+			<DataGridTextColumn Header="Byte 7"/>
+			<DataGridTextColumn Header="Byte 8"/>
+		</DataGrid.Columns>
+	</DataGrid>
+</UserControl>

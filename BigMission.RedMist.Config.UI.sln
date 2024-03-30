@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34310.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigMission.RedMist.Config.UI", "BigMission.RedMist.Config.UI\BigMission.RedMist.Config.UI.csproj", "{6122F2E9-79B4-4A3A-8B95-6C82C281061A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigMission.RedMist.Config.UI.Desktop", "BigMission.RedMist.Config.UI.Desktop\BigMission.RedMist.Config.UI.Desktop.csproj", "{D4DE5ACE-9893-4228-AF06-4B97B3A8C27A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigMission.RedMist.Config.UI.Shared", "BigMission.RedMist.Config.UI.Shared\BigMission.RedMist.Config.UI.Shared.csproj", "{F03EE44D-5F60-4741-AD59-71F6ED48A2B1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigMission.ChannelManagement.Shared", "..\ChannelManagement\BigMission.ChannelManagement.Shared\BigMission.ChannelManagement.Shared.csproj", "{624DB574-C2A1-4BD5-A6BF-FC20D63B3740}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigMission.RedMist.Config.Shared", "BigMission.RedMist.Config.Shared\BigMission.RedMist.Config.Shared.csproj", "{6C84BE7C-C69C-47F5-93AC-18AABC7C4B8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigMission.Avalonia.Utilities", "BigMission.Avalonia.Utilities\BigMission.Avalonia.Utilities.csproj", "{774F29F3-9620-4829-9618-4C2200DBA861}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6122F2E9-79B4-4A3A-8B95-6C82C281061A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6122F2E9-79B4-4A3A-8B95-6C82C281061A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6122F2E9-79B4-4A3A-8B95-6C82C281061A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6122F2E9-79B4-4A3A-8B95-6C82C281061A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4DE5ACE-9893-4228-AF06-4B97B3A8C27A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4DE5ACE-9893-4228-AF06-4B97B3A8C27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4DE5ACE-9893-4228-AF06-4B97B3A8C27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4DE5ACE-9893-4228-AF06-4B97B3A8C27A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F03EE44D-5F60-4741-AD59-71F6ED48A2B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F03EE44D-5F60-4741-AD59-71F6ED48A2B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F03EE44D-5F60-4741-AD59-71F6ED48A2B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F03EE44D-5F60-4741-AD59-71F6ED48A2B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{624DB574-C2A1-4BD5-A6BF-FC20D63B3740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{624DB574-C2A1-4BD5-A6BF-FC20D63B3740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{624DB574-C2A1-4BD5-A6BF-FC20D63B3740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{624DB574-C2A1-4BD5-A6BF-FC20D63B3740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C84BE7C-C69C-47F5-93AC-18AABC7C4B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C84BE7C-C69C-47F5-93AC-18AABC7C4B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C84BE7C-C69C-47F5-93AC-18AABC7C4B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C84BE7C-C69C-47F5-93AC-18AABC7C4B8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{774F29F3-9620-4829-9618-4C2200DBA861}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{774F29F3-9620-4829-9618-4C2200DBA861}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{774F29F3-9620-4829-9618-4C2200DBA861}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{774F29F3-9620-4829-9618-4C2200DBA861}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {25BE5F7E-DF86-4162-ABF2-F9887F519101}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:g="clr-namespace:BigMission.RedMist.Config.UI.Shared.General"
+			 xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BigMission.RedMist.Config.UI.Shared.General.GeneralView"
+			 x:DataType="g:GeneralViewModel">
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<g:GeneralViewModel />
+	</Design.DataContext>
+
+	<UserControl.Styles>
+		<Style Selector="TextBlock">
+			<Setter Property="Margin" Value="3"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+		</Style>
+		<Style Selector="TextBlock.note">
+			<Setter Property="Margin" Value="15,0,0,3"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+		</Style>
+		<Style Selector="TextBox">
+			<Setter Property="Margin" Value="0,2,0,2"/>
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+		</Style>
+	</UserControl.Styles>
+	<StackPanel>
+		<TextBlock Classes="theme-text-heading" Text="Settings for the Base Device Configuration"/>
+		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto,*">
+			<TextBlock Text="Car Number"/>
+			<TextBox Grid.Column="1" Width="85" Text="{Binding Car}" HorizontalAlignment="Left"/>
+			<TextBlock Classes="note size-xs" Text="Set the car number to match the car's number in the cloud." Grid.Row="1" Grid.ColumnSpan="3"/>
+
+			<!--Get from the API key-->
+			<!--<TextBlock Text="Device App ID" Grid.Row="2"/>
+				<TextBox Grid.Column="1" Width="60" Text="{Binding DeviceAppId}" Grid.Row="2"/>
+				<TextBlock Classes="note size-xs" Text="Enter the ID from the cloud registration." Grid.Row="3" Grid.ColumnSpan="3"/>-->
+
+			<TextBlock Text="Server URL" Grid.Row="4"/>
+			<TextBox Grid.Column="1" MinWidth="400" Text="{Binding ApiUrl}" Grid.Row="4"/>
+			<TextBlock Classes="note size-xs" Text="The cloud API endpoint." Grid.Row="5" Grid.ColumnSpan="3"/>
+
+			<TextBlock Text="API Key" Grid.Row="6"/>
+			<TextBox PasswordChar="{actipro:ThemeResource EditPasswordChar}" Grid.Column="1" MinWidth="300" Text="{Binding ApiKey}" Grid.Row="6"/>
+			<TextBlock Classes="note size-xs" Text="The cloud API key for this device instance." Grid.Row="7" Grid.ColumnSpan="3"/>
+		</Grid>
+	</StackPanel>
+</UserControl>

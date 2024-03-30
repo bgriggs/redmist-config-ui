@@ -1,0 +1,106 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:aim="clr-namespace:BigMission.RedMist.Config.UI.Shared.AimCanMessageConstructor"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:DataType="aim:AimCanViewModel"
+             x:Class="BigMission.RedMist.Config.UI.Shared.AimCanMessageConstructor.AimCan">
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<aim:AimCanViewModel/>
+	</Design.DataContext>
+	<UserControl.Styles>
+		<Style Selector="TextBlock.note">
+			<Setter Property="Margin" Value="15,0,0,3"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+		</Style>
+	</UserControl.Styles>
+
+	<StackPanel>
+		<TextBlock Classes="theme-text-heading" Text="Generate AIM CAN Configuration" Margin="3"/>
+		<TabControl>
+			<!--Settings-->
+			<TabItem Header="Settings">
+				<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto,Auto,Auto,*">
+					<TextBlock Classes="theme-text-heading" Text="Default Settings" Grid.ColumnSpan="3"/>
+
+					<TextBlock Text="Starting CAN ID" VerticalAlignment="Center" Grid.Row="1"/>
+					<TextBox Width="120" Text="{Binding StartId, StringFormat={}{0:x}}}" Grid.Row="1" Grid.Column="1" Margin="3,0,0,0" HorizontalAlignment="Left"/>
+					<ToggleSwitch IsChecked="{Binding IsExtendedId}" OnContent="Extended" OffContent="Standard" Classes="theme-solid accent" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="8,0,0,0"/>
+					<ToggleSwitch IsChecked="{Binding IsBigEndian}" OnContent="Big Endian" OffContent="Little Endian" Classes="theme-solid accent" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Margin="8,0,0,0"/>
+					<TextBlock Classes="note size-xs" Text="CAN ID to start generating messages to be incremented by 1." Grid.Row="2" Grid.ColumnSpan="5"/>
+
+					<TextBlock Text="Base TX Frequency (hz)" VerticalAlignment="Center" Grid.Row="3"/>
+					<TextBox Width="70" Text="{Binding FrequencyHz}" Grid.Row="3" Grid.Column="1" Margin="3,0,0,0" HorizontalAlignment="Left"/>
+					<TextBlock Classes="note size-xs" Text="Default frequency to send messages." Grid.Row="4" Grid.ColumnSpan="5"/>
+
+					<StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5">
+						<TextBlock Text="Include Power Channels" VerticalAlignment="Center"/>
+						<ToggleSwitch x:Name="powerChs" IsChecked="{Binding IncludePowerChannels}" OnContent="Yes" OffContent="No" Classes="theme-solid accent" VerticalAlignment="Center" Margin="4,0,0,0"/>
+
+						<TextBlock Text="Current Length" VerticalAlignment="Center" Margin="10,0,0,0" IsVisible="{Binding #powerChs.IsChecked}"/>
+						<TextBox Width="50" Text="{Binding PowerCurrentLength}" Margin="3,0,0,0" HorizontalAlignment="Left" IsVisible="{Binding #powerChs.IsChecked}"/>
+
+						<TextBlock Text="Current Multiplier" VerticalAlignment="Center" Margin="10,0,0,0" IsVisible="{Binding #powerChs.IsChecked}"/>
+						<TextBox Width="50" Text="{Binding PowerCurrentMultiplier}" Margin="3,0,0,0" HorizontalAlignment="Left" IsVisible="{Binding #powerChs.IsChecked}"/>
+					</StackPanel>
+
+					<TextBlock Text="Include Alarm Channels" VerticalAlignment="Center" Grid.Row="6"/>
+					<ToggleSwitch IsChecked="{Binding IncludeAlarmChannels}" OnContent="Yes" OffContent="No" Grid.Row="6" Grid.Column="1" Classes="theme-solid accent" VerticalAlignment="Center" Margin="4,0,0,0"/>
+
+					<TextBlock Text="Internal Channels" VerticalAlignment="Center" Grid.Row="7"/>
+
+					<DataGrid BorderThickness="1" BorderBrush="Gray" ItemsSource="{Binding InternalDefaults}" Grid.Row="8" Grid.ColumnSpan="5">
+						<DataGrid.Columns>
+							<DataGridCheckBoxColumn Header="Include" Binding="{Binding Include}"/>
+							<DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+							<DataGridTextColumn Header="Length" Binding="{Binding Length}"/>
+							<DataGridTextColumn Header="Multiplier" Binding="{Binding Multiplier}"/>
+							<DataGridTextColumn Header="Frequency (hz)" Binding="{Binding FrequencyHz}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			
+			<TabItem Header="CAN Generator" IsSelected="True">
+				<Grid RowDefinitions="Auto,*">
+					<StackPanel Orientation="Horizontal">
+						<Button Content="Load File" Command="{Binding LoadFile}" HorizontalAlignment="Left" Margin="3"/>
+						<Button Content="Generate" Command="{Binding GenerateConfig}" HorizontalAlignment="Left" Margin="3"/>
+					</StackPanel>
+					<DataGrid BorderThickness="1" Grid.Row="1" BorderBrush="Gray" ItemsSource="{Binding Channels}" Margin="3" Height="500" ScrollViewer.IsScrollChainingEnabled="False">
+						<DataGrid.Columns>
+							<DataGridCheckBoxColumn Header="Include" Binding="{Binding Include}"/>
+							<DataGridTemplateColumn Header="Group">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Group}" VerticalAlignment="Center" IsVisible="False"/>
+											<Image Source="{Binding GroupImage}" VerticalAlignment="Center" Margin="3"/>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+							<DataGridTemplateColumn Header="Name">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Name}" VerticalAlignment="Center" IsVisible="False"/>
+											<Image Source="{Binding NameImage}" VerticalAlignment="Center" Margin="3"/>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+							<DataGridTextColumn Header="Length" Binding="{Binding Length}"/>
+							<DataGridTextColumn Header="Multiplier" Binding="{Binding Multiplier}"/>
+							<DataGridTextColumn Header="Frequency (hz)" Binding="{Binding FrequencyHz}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+		</TabControl>
+	</StackPanel>
+</UserControl>

@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BigMission.RedMist.Config.UI.ViewModels"
+			 xmlns:ch="clr-namespace:BigMission.RedMist.Config.UI.Shared.Channels;assembly=BigMission.RedMist.Config.UI.Shared"
+			 xmlns:gen="clr-namespace:BigMission.RedMist.Config.UI.Shared.General;assembly=BigMission.RedMist.Config.UI.Shared"
+			 xmlns:cb="clr-namespace:BigMission.RedMist.Config.UI.Shared.CanBus;assembly=BigMission.RedMist.Config.UI.Shared"
+			 xmlns:ac="clr-namespace:BigMission.RedMist.Config.UI.Shared.AimCanMessageConstructor;assembly=BigMission.RedMist.Config.UI.Shared"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="350"
+             x:Class="BigMission.RedMist.Config.UI.Views.MainView"
+             x:DataType="vm:MainViewModel">
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:MainViewModel />
+	</Design.DataContext>
+
+	<Grid RowDefinitions="Auto,*">
+		<StackPanel Orientation="Horizontal">
+			<Button Content="Get Configuration"/>
+			<Button Content="Send Configuration"/>
+			<Button Content="Save" Click="SaveFileButton_Clicked"/>
+			<Button Content="Load" Click="LoadFileButton_Clicked"/>
+		</StackPanel>
+		<TabControl Grid.Row="1">
+			<TabItem Header="Live Data">
+			</TabItem>
+			<TabItem Header="General">
+				<gen:GeneralView DataContext="{Binding GeneralViewModel}"/>
+			</TabItem>
+			<TabItem Header="Channels">
+				<ch:ChannelsView DataContext="{Binding ChannelsViewModel}"/>
+			</TabItem>
+			<TabItem Header="CAN Bus" IsSelected="True">
+				<cb:CanBusView DataContext="{Binding CanBusViewModel}"/>
+			</TabItem>
+			<TabItem Header="Math">
+			</TabItem>
+			<TabItem Header="Logging">
+			</TabItem>
+			<TabItem Header="Telemetry">
+			</TabItem>
+			<TabItem Header="Counters">
+			</TabItem>
+			<TabItem Header="Logic">
+			</TabItem>
+			<TabItem Header="Tables">
+			</TabItem>
+			<TabItem Header="Timers">
+			</TabItem>
+			<TabItem Header="Timing and Scoring">
+			</TabItem>
+			<TabItem Header="AIM CAN" >
+				<ac:AimCan />
+			</TabItem>
+		</TabControl>
+	</Grid>
+</UserControl>
