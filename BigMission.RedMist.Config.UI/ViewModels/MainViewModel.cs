@@ -17,9 +17,6 @@ public partial class MainViewModel : ObservableObject
         set
         {
             data = value;
-            GeneralViewModel = new GeneralViewModel { Data = data?.GeneralConfig ?? new() };
-            ChannelsViewModel = new ChannelsViewModel { Data = data?.ChannelConfig ?? new() };
-            CanBusViewModel = new CanBusViewModel { Data = data?.CanBusConfig ?? new() };
         }
     }
 
@@ -30,14 +27,17 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private CanBusViewModel? canBusViewModel;
 
-    public MainViewModel()
+    public MainViewModel(CanBusViewModel canBusViewModel, ChannelsViewModel channelsViewModel, GeneralViewModel generalViewModel)
     {
         Data = new MasterDeviceConfigDto();
+        CanBusViewModel = canBusViewModel;
+        ChannelsViewModel = channelsViewModel;
+        GeneralViewModel = generalViewModel;
 
         // TODO: Remove test data
         ChannelsViewModel?.Channels.Add(new ChannelMappingRowViewModel { Data = new ChannelMappingDto { Name = "test" }, ParentVm = ChannelsViewModel });
         ChannelsViewModel?.Channels.Add(new ChannelMappingRowViewModel { Data = new ChannelMappingDto { Name = "sefasrdf", IsReserved = true }, ParentVm = ChannelsViewModel });
 
-        CanBusViewModel?.Messages.Add(new CanMessageViewModel { Data = new CanMessageConfigDto { CanId = 0x01 } });
+        CanBusViewModel.Messages.Add(new CanMessageViewModel { Data = new CanMessageConfigDto { CanId = 0x01 } });
     }
 }

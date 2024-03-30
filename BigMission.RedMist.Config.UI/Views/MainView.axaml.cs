@@ -10,11 +10,11 @@ namespace BigMission.RedMist.Config.UI.Views;
 
 public partial class MainView : UserControl
 {
-    private MainViewModel mainViewModel = new();
+    //private MainViewModel mainViewModel = new();
     public MainView()
     {
         InitializeComponent();
-        DataContext = mainViewModel;
+        //DataContext = mainViewModel;
     }
 
     private async void SaveFileButton_Clicked(object sender, RoutedEventArgs args)
@@ -32,8 +32,8 @@ public partial class MainView : UserControl
             {
                 await using var stream = await file.OpenWriteAsync();
                 using var streamWriter = new StreamWriter(stream);
-                var d = mainViewModel.Data?.Serialize();
-                await streamWriter.WriteLineAsync(d);
+                //var d = mainViewModel.Data?.Serialize();
+                //await streamWriter.WriteLineAsync(d);
             }
         }
     }
@@ -57,11 +57,11 @@ public partial class MainView : UserControl
                 var fileContent = await streamReader.ReadToEndAsync();
                 if (!string.IsNullOrEmpty(fileContent))
                 {
-                    var mvm = new MainViewModel
-                    {
-                        Data = MasterDeviceConfigDto.Deserialize(fileContent) ?? new MasterDeviceConfigDto(),
-                    };
-                    DataContext = mvm;
+                    //var mvm = new MainViewModel
+                    //{
+                    //    Data = MasterDeviceConfigDto.Deserialize(fileContent) ?? new MasterDeviceConfigDto(),
+                    //};
+                    //DataContext = mvm;
                 }
             }
         }
