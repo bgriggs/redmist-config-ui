@@ -5,19 +5,19 @@ using Newtonsoft.Json;
 
 namespace BigMission.RedMist.Config.Shared;
 
-public class MasterDeviceConfigDto
+public class MasterDriverSyncConfig
 {
     public GeneralConfigDto GeneralConfig { get; set; } = new();
     public ChannelConfigDto ChannelConfig { get; set; } = new();
-    public CanBusConfigDto CanBusConfig { get; set; } = new();
+    public List<CanBusConfigDto> CanBusConfigs { get; set; } = [];
 
     public string Serialize()
     {
         return JsonConvert.SerializeObject(this);
     }
 
-    public static MasterDeviceConfigDto? Deserialize(string json)
+    public static MasterDriverSyncConfig? Deserialize(string json)
     {
-        return JsonConvert.DeserializeObject<MasterDeviceConfigDto>(json);
+        return JsonConvert.DeserializeObject<MasterDriverSyncConfig>(json);
     }
 }

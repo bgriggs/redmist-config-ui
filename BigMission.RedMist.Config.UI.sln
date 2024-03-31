@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigMission.RedMist.Config.Shared.Tests", "BigMission.RedMist.Config.Shared.Tests\BigMission.RedMist.Config.Shared.Tests.csproj", "{BBCD616F-4130-45E9-A855-30E904388ABF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{774F29F3-9620-4829-9618-4C2200DBA861}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{774F29F3-9620-4829-9618-4C2200DBA861}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{774F29F3-9620-4829-9618-4C2200DBA861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBCD616F-4130-45E9-A855-30E904388ABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCD616F-4130-45E9-A855-30E904388ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBCD616F-4130-45E9-A855-30E904388ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBCD616F-4130-45E9-A855-30E904388ABF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

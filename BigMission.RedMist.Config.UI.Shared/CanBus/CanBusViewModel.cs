@@ -1,22 +1,47 @@
 ﻿using BigMission.Avalonia.Utilities;
+using BigMission.RedMist.Config.Shared;
 using BigMission.RedMist.Config.Shared.CanBus;
 using CommunityToolkit.Mvvm.ComponentModel;
+using DialogHostAvalonia;
 
 namespace BigMission.RedMist.Config.UI.Shared.CanBus;
 
+/// <summary>
+/// View Model for an overall CAN bus configuration, such as can0.
+/// </summary>
 public partial class CanBusViewModel : ObservableObject
 {
-    private CanBusConfigDto data = new();
-    public CanBusConfigDto Data
+    public CanBusConfigDto Data { get; }
+
+    [ObservableProperty]
+    private string name = string.Empty;
+    private readonly IDriverSyncConfigurationProvider configurationProvider;
+
+    public LargeObservableCollection<CanMessageViewModel> Messages { get; } = [];
+
+    public CanBusViewModel(CanBusConfigDto dto, IDriverSyncConfigurationProvider configurationProvider)
     {
-        get => data;
-        set
-        {
-            data = value;
-            Messages.SetRange(data.Messages.Select(m => new CanMessageViewModel { Data = m }));
-        }
+        Messages.SetRange(dto.Messages.Select(m => new CanMessageViewModel(m, this, configurationProvider)));
+        Messages.CollectionChanged += Messages_CollectionChanged;
+        Data = dto;
+        this.configurationProvider = configurationProvider;
     }
 
-    public LargeObservableCollection<CanMessageViewModel> Messages { get; set; } = [];
+    private void Messages_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        Data.Messages.Clear();
+        Data.Messages.AddRange(Messages.Select(d => d.Data));
+    }
 
+    public async Task AddMessageClick()
+    {
+        var dto = new CanMessageConfigDto();
+        var vm = new CanMessageDialogViewModel(dto);
+        var result = await DialogHost.Show(vm, "MainDialogHost");
+        if (result is CanMessageDialogViewModel)
+        {
+            var msgVm = new CanMessageViewModel(dto, this, configurationProvider);
+            Messages.Add(msgVm);
+        }
+    }
 }

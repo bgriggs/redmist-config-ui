@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using BigMission.Avalonia.LogViewer.Extensions;
+using BigMission.RedMist.Config.Shared;
 using BigMission.RedMist.Config.UI.Shared.CanBus;
 using BigMission.RedMist.Config.UI.Shared.Channels;
 using BigMission.RedMist.Config.UI.Shared.General;
@@ -38,6 +39,8 @@ public partial class App : Application
         var services = builder.Services;
         //services.AddHostedService<UdpService>();
         //services.AddHostedService<DataCloudForwarder>();
+        services.AddSingleton<DriverSyncConfigurationProvider>();
+        services.AddSingleton<IDriverSyncConfigurationProvider>(s => s.GetRequiredService<DriverSyncConfigurationProvider>());
         //ConfigureServices(services);
         ConfigureViewModels(services);
         ConfigureViews(services);
@@ -81,9 +84,9 @@ public partial class App : Application
     //internal static partial void ConfigureServices(IServiceCollection services);
 
     [Singleton(typeof(MainViewModel))]
-    [Singleton(typeof(CanBusViewModel))]
-    [Singleton(typeof(ChannelsViewModel))]
-    [Singleton(typeof(GeneralViewModel))]
+    //[Singleton(typeof(CanBusViewModel))]
+    //[Singleton(typeof(ChannelsViewModel))]
+    //[Singleton(typeof(GeneralViewModel))]
     //[Singleton(typeof(QuarterViewModelFactory), typeof(IQuarterViewModelFactory))]
     internal static partial void ConfigureViewModels(IServiceCollection services);
 
@@ -91,5 +94,6 @@ public partial class App : Application
     [Singleton(typeof(CanBusView))]
     [Singleton(typeof(ChannelsView))]
     [Singleton(typeof(GeneralView))]
+    [Singleton(typeof(CanMessageDialog))]
     internal static partial void ConfigureViews(IServiceCollection services);
 }

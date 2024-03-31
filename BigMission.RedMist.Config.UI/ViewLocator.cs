@@ -26,9 +26,10 @@ public class ViewLocator : IDataTemplate
     {
         this.serviceProvider = serviceProvider;
         RegisterViewFactory<MainViewModel, MainView>();
-        RegisterViewFactory<CanBusViewModel, CanBusView>();
+        //RegisterViewFactory<CanBusViewModel, CanBusView>();
         RegisterViewFactory<ChannelsViewModel, ChannelsView>();
         RegisterViewFactory<GeneralViewModel, GeneralView>();
+        RegisterViewFactory<CanMessageDialogViewModel, CanMessageDialog>();
         //    RegisterViewFactory<AboutViewModel, AboutView>();
 
         //    // Worksheet dialogs

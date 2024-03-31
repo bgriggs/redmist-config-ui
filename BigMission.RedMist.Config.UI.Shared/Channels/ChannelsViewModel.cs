@@ -10,30 +10,8 @@ namespace BigMission.RedMist.Config.UI.Shared.Channels;
 [NotifyDataErrorInfo]
 public partial class ChannelsViewModel : ObservableValidator
 {
-    private ChannelConfigDto data = new();
-    public ChannelConfigDto Data
-    {
-        get => data;
-        set
-        {
-            data = value;
-            Channels.BeginBulkOperation();
-            try
-            {
-                Channels.Clear();
-                foreach (var channel in data.ChannelMappings)
-                {
-                    Channels.Add(new ChannelMappingRowViewModel { Data = channel, ParentVm = this });
-                }
-            }
-            finally
-            {
-                // Suppress the event notification since we do not need to sync back to the source data
-                Channels.EndBulkOperation(false);
-            }
-        }
-    }
-
+    private readonly ChannelConfigDto data;
+    
     public LargeObservableCollection<ChannelMappingRowViewModel> Channels { get; } = [];
 
     private string searchText = string.Empty;
@@ -47,9 +25,29 @@ public partial class ChannelsViewModel : ObservableValidator
         }
     }
 
-    public ChannelsViewModel()
+    public ChannelsViewModel(ChannelConfigDto channelConfigDto)
     {
+        data = channelConfigDto;
+        InitializeChannelViewModels();
         Channels.CollectionChanged += Channels_CollectionChanged;
+    }
+
+    private void InitializeChannelViewModels()
+    {
+        Channels.BeginBulkOperation();
+        try
+        {
+            Channels.Clear();
+            foreach (var channel in data.ChannelMappings)
+            {
+                Channels.Add(new ChannelMappingRowViewModel { Data = channel, ParentVm = this });
+            }
+        }
+        finally
+        {
+            // Suppress the event notification since we do not need to sync back to the source data
+            Channels.EndBulkOperation(false);
+        }
     }
 
     /// <summary>
@@ -57,8 +55,8 @@ public partial class ChannelsViewModel : ObservableValidator
     /// </summary>
     private void Channels_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        Data.ChannelMappings.Clear();
-        Data.ChannelMappings.AddRange(Channels.Select(c => c.Data));
+        data.ChannelMappings.Clear();
+        data.ChannelMappings.AddRange(Channels.Select(c => c.Data));
     }
 
     public async Task AddChannelClick()
@@ -66,7 +64,7 @@ public partial class ChannelsViewModel : ObservableValidator
         var result = await DialogHost.Show(new ChannelMappingViewModel { ParentChannels = Channels }, "MainDialogHost");
         if (result is ChannelMappingViewModel map)
         {
-            map.Data.Id = Data.IncNextId();
+            map.Data.Id = data.IncNextId();
             var rowVm = new ChannelMappingRowViewModel { Data = map.Data, ParentVm = this };
             Channels.Add(rowVm);
         }

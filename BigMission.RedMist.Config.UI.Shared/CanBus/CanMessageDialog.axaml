@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:cb="clr-namespace:BigMission.RedMist.Config.UI.Shared.CanBus"
+			 xmlns:dialog="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="250"
+             x:Class="BigMission.RedMist.Config.UI.Shared.CanBus.CanMessageDialog"
+			 x:DataType="cb:CanMessageDialogViewModel">
+	<StackPanel>
+		<TextBlock Classes="theme-text-heading" Text="CAN Message" Margin="4"/>
+		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto" HorizontalAlignment="Center" Margin="25,5,25,10">
+			
+			<!--Is Expanded ID-->
+			<TextBlock Text="ID Type" Classes="form"/>
+			<ToggleSwitch IsChecked="{Binding IsExtended}" OffContent="Standard (11-bit)" OnContent="Extended (29-bit)" Grid.Row="0" Grid.Column="1"/>
+			
+			<!--CAN ID-->
+			<TextBlock Text="CAN ID (hex)" Classes="form" Grid.Row="1"/>
+			<TextBox Classes="form" Text="{Binding CanIdStr}" Grid.Row="1" Grid.Column="1" Width="80"/>
+
+			<!--Length-->
+			<TextBlock Text="Length" Classes="form" Grid.Row="2"/>
+			<TextBox Classes="form" Text="{Binding Length}" Grid.Row="2" Grid.Column="1"/>
+
+			<!--Byte Order-->
+			<TextBlock Text="Byte Order" Classes="form" Grid.Row="3"/>
+			<ToggleSwitch IsChecked="{Binding IsBigEndian}" OnContent="Big Endian/Normal" OffContent="Little Endian/Word Swap" Grid.Row="3" Grid.Column="1"/>
+			
+			<!--TX/RX-->
+			<TextBlock Text="TX/RX" Classes="form" Grid.Row="4"/>
+			<ToggleSwitch IsChecked="{Binding IsReceive}" OnContent="Receive" OffContent="Transmit" Grid.Row="4" Grid.Column="1"/>
+			
+			<!--Transmit Frequency-->
+			<TextBlock Text="TX Frequency(ms)" Classes="form" Grid.Row="5" IsVisible="{Binding IsTransmit}"/>
+			<TextBox Classes="form" Text="{Binding TransmitFrequencyMs}" Grid.Row="5" Grid.Column="1" IsVisible="{Binding IsTransmit}"/>
+
+		</Grid>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Classes="ok" Margin="3" Command="{Binding OKClickAsync}"/>
+			<Button Classes="cancel" Margin="3"
+					Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialog:DialogHost}, Path=CloseDialogCommand}"/>
+		</StackPanel>
+	</StackPanel>
+</UserControl>

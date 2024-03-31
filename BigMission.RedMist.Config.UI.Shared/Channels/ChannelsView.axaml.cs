@@ -6,11 +6,9 @@ namespace BigMission.RedMist.Config.UI.Shared.Channels
 {
     public partial class ChannelsView : UserControl
     {
-        private readonly ChannelsViewModel viewModel = new();
         public ChannelsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
         }
 
         /// <summary>

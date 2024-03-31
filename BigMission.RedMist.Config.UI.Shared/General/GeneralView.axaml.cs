@@ -7,7 +7,6 @@ namespace BigMission.RedMist.Config.UI.Shared.General
         public GeneralView()
         {
             InitializeComponent();
-            DataContext = new GeneralViewModel();
         }
     }
 }

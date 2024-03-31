@@ -1,43 +1,45 @@
-﻿using BigMission.ChannelManagement.Shared;
-using BigMission.RedMist.Config.Shared;
-using BigMission.RedMist.Config.Shared.CanBus;
+﻿using BigMission.RedMist.Config.Shared;
 using BigMission.RedMist.Config.UI.Shared.CanBus;
 using BigMission.RedMist.Config.UI.Shared.Channels;
 using BigMission.RedMist.Config.UI.Shared.General;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace BigMission.RedMist.Config.UI.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    private MasterDeviceConfigDto? data;
-    public MasterDeviceConfigDto? Data
-    {
-        get => data;
-        set
-        {
-            data = value;
-        }
-    }
-
     [ObservableProperty]
     private GeneralViewModel? generalViewModel;
     [ObservableProperty]
     private ChannelsViewModel? channelsViewModel;
     [ObservableProperty]
-    private CanBusViewModel? canBusViewModel;
+    private ObservableCollection<CanBusViewModel> canBusViewModels;
+    private readonly IDriverSyncConfigurationProvider configurationProvider;
 
-    public MainViewModel(CanBusViewModel canBusViewModel, ChannelsViewModel channelsViewModel, GeneralViewModel generalViewModel)
+    public MainViewModel(IDriverSyncConfigurationProvider configurationProvider)
     {
-        Data = new MasterDeviceConfigDto();
-        CanBusViewModel = canBusViewModel;
-        ChannelsViewModel = channelsViewModel;
-        GeneralViewModel = generalViewModel;
+        this.configurationProvider = configurationProvider;
+        CanBusViewModels = [];
+        InitializeConfiguration();
+        configurationProvider.ConfigurationChanged += ConfigurationProvider_ConfigurationChanged;
+    }
 
-        // TODO: Remove test data
-        ChannelsViewModel?.Channels.Add(new ChannelMappingRowViewModel { Data = new ChannelMappingDto { Name = "test" }, ParentVm = ChannelsViewModel });
-        ChannelsViewModel?.Channels.Add(new ChannelMappingRowViewModel { Data = new ChannelMappingDto { Name = "sefasrdf", IsReserved = true }, ParentVm = ChannelsViewModel });
+    private void ConfigurationProvider_ConfigurationChanged()
+    {
+        InitializeConfiguration();
+    }
 
-        CanBusViewModel.Messages.Add(new CanMessageViewModel { Data = new CanMessageConfigDto { CanId = 0x01 } });
+    private void InitializeConfiguration()
+    {
+        var config = configurationProvider.GetConfiguration();
+        GeneralViewModel = new GeneralViewModel(config.GeneralConfig);
+        ChannelsViewModel = new ChannelsViewModel(config.ChannelConfig);
+
+        CanBusViewModels.Clear();
+        for (int i = 0; i < config.CanBusConfigs.Count; i++)
+        {
+            CanBusViewModels.Add(new CanBusViewModel(config.CanBusConfigs[i], configurationProvider) { Name = $"CAN {i + 1}" });
+        }
     }
 }

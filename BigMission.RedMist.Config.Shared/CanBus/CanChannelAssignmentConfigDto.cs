@@ -2,7 +2,7 @@
 
 public class CanChannelAssignmentConfigDto
 {
-    public int SourceChannelId {  get; set; }
+    public int ChannelId {  get; set; }
     public int Offset { get; set; }
     public int Length { get; set; }
     public int Mask { get; set; }

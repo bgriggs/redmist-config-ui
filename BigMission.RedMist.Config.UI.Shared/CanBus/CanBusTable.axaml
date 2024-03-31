@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BigMission.RedMist.Config.UI.Shared.CanBus.CanBusTable">
+	<UserControl.Resources>
+		<DataTemplate x:Key="TextCellDT">
+			<TextBlock Text="{Binding .}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		</DataTemplate>
+		
+		<DataTemplate x:Key="EnabledCellDT">
+			<ToggleSwitch IsChecked="{Binding IsEnabled}" Classes="theme-solid" ToolTip.Tip="Enable/Disable" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,0,0"/>
+		</DataTemplate>
+
+		<DataTemplate x:Key="ButtonCellDT">
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Button Classes="icon" ToolTip.Tip="Edit message" Command="{Binding EditCanMessageAsync}">
+					<Image Source="{StaticResource editicon}"/>
+				</Button>
+				<Button Classes="icon" ToolTip.Tip="Delete message" Command="{Binding DeleteCanMessageAsync}">
+					<Image Source="{StaticResource closeicon}"/>
+				</Button>
+			</StackPanel>
+		</DataTemplate>
+
+		<DataTemplate x:Key="ByteCellDT">
+			<Button>
+				<Button.Styles>
+					<Style Selector="Button">
+						<Setter Property="Height" Value="23"/>
+						<Setter Property="BorderThickness" Value="1"/>
+						<Setter Property="Padding" Value="0"/>
+					</Style>
+				</Button.Styles>
+				<Button.Content>
+					<TextBlock Text="{Binding Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				</Button.Content>
+			</Button>
+		</DataTemplate>
+	</UserControl.Resources>
+	<StackPanel>
+		<Button Command="{Binding AddMessageClick}" Margin="0,3,3,3" HorizontalAlignment="Left">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Add Message" VerticalAlignment="Center"/>
+				<Image Source="{StaticResource addicon}" Width="12" Margin="4,0,0,0"/>
+			</StackPanel>
+		</Button>
+		<StackPanel x:Name="SpHeader" Orientation="Horizontal">			
+		</StackPanel>
+		<StackPanel x:Name="SpRows">			
+		</StackPanel>
+	</StackPanel>
+</UserControl>
