@@ -142,7 +142,7 @@ public partial class CanBusTable : UserControl
             for (int i = 0; i < item.Data.Length;)
             {
                 var channel = item.Data.ChannelAssignments.FirstOrDefault(c => c.Offset == i);
-                var vm = new ByteOverlayViewModel(channel, item.ConfigurationProvider);
+                var vm = new ByteOverlayViewModel(channel, item.ChannelProvider);
                 if (channel == null)
                 {
                     vm.AvailableBytes = GetAvailableBytes(item.Data.ChannelAssignments, i);

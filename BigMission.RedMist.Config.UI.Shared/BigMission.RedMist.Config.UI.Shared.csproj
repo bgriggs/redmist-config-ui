@@ -19,4 +19,9 @@
 	  <ProjectReference Include="..\BigMission.Avalonia.Utilities\BigMission.Avalonia.Utilities.csproj" />
 	  <ProjectReference Include="..\BigMission.RedMist.Config.Shared\BigMission.RedMist.Config.Shared.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Channels\ChannelSelectionControl.axaml.cs">
+	    <DependentUpon>ChannelSelectionControl.axaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
 </Project>

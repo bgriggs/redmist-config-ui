@@ -1,4 +1,5 @@
 ﻿using BigMission.RedMist.Config.Shared;
+using BigMission.RedMist.Config.Shared.Channels;
 using BigMission.RedMist.Config.UI.Shared.CanBus;
 using BigMission.RedMist.Config.UI.Shared.Channels;
 using BigMission.RedMist.Config.UI.Shared.General;
@@ -16,10 +17,12 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<CanBusViewModel> canBusViewModels;
     private readonly IDriverSyncConfigurationProvider configurationProvider;
+    private readonly ChannelProvider channelProvider;
 
-    public MainViewModel(IDriverSyncConfigurationProvider configurationProvider)
+    public MainViewModel(IDriverSyncConfigurationProvider configurationProvider, ChannelProvider channelProvider)
     {
         this.configurationProvider = configurationProvider;
+        this.channelProvider = channelProvider;
         CanBusViewModels = [];
         InitializeConfiguration();
         configurationProvider.ConfigurationChanged += ConfigurationProvider_ConfigurationChanged;
@@ -39,7 +42,7 @@ public partial class MainViewModel : ObservableObject
         CanBusViewModels.Clear();
         for (int i = 0; i < config.CanBusConfigs.Count; i++)
         {
-            CanBusViewModels.Add(new CanBusViewModel(config.CanBusConfigs[i], configurationProvider) { Name = $"CAN {i + 1}" });
+            CanBusViewModels.Add(new CanBusViewModel(config.CanBusConfigs[i], channelProvider) { Name = $"CAN {i + 1}" });
         }
     }
 }

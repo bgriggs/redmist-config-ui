@@ -1,6 +1,7 @@
 ﻿using BigMission.Avalonia.Utilities;
 using BigMission.RedMist.Config.Shared;
 using BigMission.RedMist.Config.Shared.CanBus;
+using BigMission.RedMist.Config.Shared.Channels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DialogHostAvalonia;
 
@@ -15,16 +16,16 @@ public partial class CanBusViewModel : ObservableObject
 
     [ObservableProperty]
     private string name = string.Empty;
-    private readonly IDriverSyncConfigurationProvider configurationProvider;
+    private readonly ChannelProvider channelProvider;
 
     public LargeObservableCollection<CanMessageViewModel> Messages { get; } = [];
 
-    public CanBusViewModel(CanBusConfigDto dto, IDriverSyncConfigurationProvider configurationProvider)
+    public CanBusViewModel(CanBusConfigDto dto, ChannelProvider channelProvider)
     {
-        Messages.SetRange(dto.Messages.Select(m => new CanMessageViewModel(m, this, configurationProvider)));
+        Messages.SetRange(dto.Messages.Select(m => new CanMessageViewModel(m, this, channelProvider)));
         Messages.CollectionChanged += Messages_CollectionChanged;
         Data = dto;
-        this.configurationProvider = configurationProvider;
+        this.channelProvider = channelProvider;
     }
 
     private void Messages_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -40,7 +41,7 @@ public partial class CanBusViewModel : ObservableObject
         var result = await DialogHost.Show(vm, "MainDialogHost");
         if (result is CanMessageDialogViewModel)
         {
-            var msgVm = new CanMessageViewModel(dto, this, configurationProvider);
+            var msgVm = new CanMessageViewModel(dto, this, channelProvider);
             Messages.Add(msgVm);
         }
     }

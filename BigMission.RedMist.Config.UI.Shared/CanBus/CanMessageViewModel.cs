@@ -1,12 +1,12 @@
 ﻿using BigMission.RedMist.Config.Shared.CanBus;
+using BigMission.RedMist.Config.Shared.Channels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DialogHostAvalonia;
+using MsBox.Avalonia;
 using MsBox.Avalonia.Dto;
 using MsBox.Avalonia.Enums;
 using MsBox.Avalonia.Models;
-using MsBox.Avalonia;
 using Newtonsoft.Json;
-using BigMission.RedMist.Config.Shared;
 
 namespace BigMission.RedMist.Config.UI.Shared.CanBus;
 
@@ -14,7 +14,7 @@ public partial class CanMessageViewModel : ObservableObject
 {
     public CanMessageConfigDto Data { get; }
     private readonly CanBusViewModel parent;
-    public IDriverSyncConfigurationProvider ConfigurationProvider { get; }
+    public ChannelProvider ChannelProvider { get; }
 
     public bool IsEnabled
     {
@@ -25,11 +25,11 @@ public partial class CanMessageViewModel : ObservableObject
     public string RxTx => Data.IsReceive ? "RX" : "TX";
     public string ByteOrder => Data.IsBigEndian ? "Big/Normal" : "Little/Word Swap";
 
-    public CanMessageViewModel(CanMessageConfigDto data, CanBusViewModel parent, IDriverSyncConfigurationProvider configurationProvider)
+    public CanMessageViewModel(CanMessageConfigDto data, CanBusViewModel parent, ChannelProvider channelProvider)
     {
         Data = data;
         this.parent = parent;
-        ConfigurationProvider = configurationProvider;
+        ChannelProvider = channelProvider;
     }
 
     public async Task EditCanMessageAsync()
@@ -42,7 +42,7 @@ public partial class CanMessageViewModel : ObservableObject
         if (result is CanMessageDialogViewModel)
         {
             parent.Messages.Remove(this);
-            var messageVm = new CanMessageViewModel(dtoCopy, parent, ConfigurationProvider);
+            var messageVm = new CanMessageViewModel(dtoCopy, parent, ChannelProvider);
             parent.Messages.Add(messageVm);
         }
     }

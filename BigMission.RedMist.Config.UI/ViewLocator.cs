@@ -30,6 +30,9 @@ public class ViewLocator : IDataTemplate
         RegisterViewFactory<ChannelsViewModel, ChannelsView>();
         RegisterViewFactory<GeneralViewModel, GeneralView>();
         RegisterViewFactory<CanMessageDialogViewModel, CanMessageDialog>();
+        RegisterViewFactory<CanChannelSelectionDialogViewModel, CanChannelSelectionDialog>();
+        RegisterViewFactory<ChannelSelectionControlViewModel, ChannelSelectionControl>();
+        RegisterViewFactory<ChannelSelectionDialogViewModel, ChannelSelectionDialog>();
         //    RegisterViewFactory<AboutViewModel, AboutView>();
 
         //    // Worksheet dialogs
@@ -60,8 +63,10 @@ public class ViewLocator : IDataTemplate
     public void RegisterViewFactory<TViewModel>(Func<Control> factory) where TViewModel : class => _locator.Add(typeof(TViewModel), factory);
 
     public void RegisterViewFactory<TViewModel, TView>()
-        where TViewModel : class
+        where TViewModel : ObservableObject
         where TView : Control
         //=> _locator.Add(typeof(TViewModel), Ioc.Default.GetService<TView>);
-        => _locator.Add(typeof(TViewModel), serviceProvider.GetService<TView>);
+    {
+        _locator.Add(typeof(TViewModel), serviceProvider.GetService<TView>);
+    }
 }

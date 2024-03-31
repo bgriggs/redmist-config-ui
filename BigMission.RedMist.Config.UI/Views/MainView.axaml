@@ -15,52 +15,55 @@
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:MainViewModel />
+		<!--<vm:MainViewModel />-->
 	</Design.DataContext>
-	<dialog:DialogHost Identifier="MainDialogHost" Background="{actipro:ThemeResource Container2BackgroundBrush}"
+	<dialog:DialogHost Identifier="NestedDialogHost" Background="{actipro:ThemeResource Container2BackgroundBrush}"
+					   DialogMargin="3" dialog:DialogHostStyle.CornerRadius="4" DisableOpeningAnimation="True">
+		<dialog:DialogHost Identifier="MainDialogHost" Background="{actipro:ThemeResource Container2BackgroundBrush}"
 						   DialogMargin="3" dialog:DialogHostStyle.CornerRadius="4" DisableOpeningAnimation="True">
 
-		<Grid RowDefinitions="Auto,*">
-			<StackPanel Orientation="Horizontal">
-				<Button Content="Get Configuration"/>
-				<Button Content="Send Configuration"/>
-				<Button Content="Save" Click="SaveFileButton_Clicked"/>
-				<Button Content="Load" Click="LoadFileButton_Clicked"/>
-			</StackPanel>
-			<TabControl Grid.Row="1">
-				<TabItem Header="Live Data">
-				</TabItem>
-				<TabItem Header="General">
-					<gen:GeneralView DataContext="{Binding GeneralViewModel}"/>
-				</TabItem>
-				<TabItem Header="Channels">
-					<ch:ChannelsView DataContext="{Binding ChannelsViewModel}"/>
-				</TabItem>
-				<TabItem Header="CAN Bus" IsSelected="True">
-					<cb:CanBusView/>
-					<!--<ContentControl Grid.Row="1" Content="{Binding CanBusViewModel}"/>-->
-				</TabItem>
-				<TabItem Header="Math">
-				</TabItem>
-				<TabItem Header="Logging">
-				</TabItem>
-				<TabItem Header="Telemetry">
-				</TabItem>
-				<TabItem Header="Counters">
-				</TabItem>
-				<TabItem Header="Logic">
-				</TabItem>
-				<TabItem Header="Tables">
-				</TabItem>
-				<TabItem Header="Timers">
-				</TabItem>
-				<TabItem Header="Timing and Scoring">
-				</TabItem>
-				<TabItem Header="AIM CAN" >
-					<ac:AimCan />
-				</TabItem>
-			</TabControl>
-		</Grid>
+			<Grid RowDefinitions="Auto,*">
+				<StackPanel Orientation="Horizontal">
+					<Button Content="Get Configuration"/>
+					<Button Content="Send Configuration"/>
+					<Button Content="Save" Click="SaveFileButton_Clicked"/>
+					<Button Content="Load" Click="LoadFileButton_Clicked"/>
+				</StackPanel>
+				<TabControl Grid.Row="1">
+					<TabItem Header="Live Data">
+					</TabItem>
+					<TabItem Header="General">
+						<gen:GeneralView DataContext="{Binding GeneralViewModel}"/>
+					</TabItem>
+					<TabItem Header="Channels">
+						<ch:ChannelsView DataContext="{Binding ChannelsViewModel}"/>
+					</TabItem>
+					<TabItem Header="CAN Bus" IsSelected="True">
+						<cb:CanBusView/>
+						<!--<ContentControl Grid.Row="1" Content="{Binding CanBusViewModel}"/>-->
+					</TabItem>
+					<TabItem Header="Math">
+					</TabItem>
+					<TabItem Header="Logging">
+					</TabItem>
+					<TabItem Header="Telemetry">
+					</TabItem>
+					<TabItem Header="Counters">
+					</TabItem>
+					<TabItem Header="Logic">
+					</TabItem>
+					<TabItem Header="Tables">
+					</TabItem>
+					<TabItem Header="Timers">
+					</TabItem>
+					<TabItem Header="Timing and Scoring">
+					</TabItem>
+					<TabItem Header="AIM CAN" >
+						<ac:AimCan />
+					</TabItem>
+				</TabControl>
+			</Grid>
 
+		</dialog:DialogHost>
 	</dialog:DialogHost>
 </UserControl>

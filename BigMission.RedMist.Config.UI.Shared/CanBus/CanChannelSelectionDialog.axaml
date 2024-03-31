@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:dialog="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BigMission.RedMist.Config.UI.Shared.CanBus.CanChannelSelectionDialog">
+	<StackPanel>
+		<TextBlock Classes="theme-text-heading" Text="CAN Channel Assignmnet" Margin="4"/>
+		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto" HorizontalAlignment="Center" Margin="25,5,25,10">
+			<TextBlock Text="Channel" Classes="form"/>
+			<ContentControl Content="{Binding ChannelSelectionViewModel}" Grid.Column="1"/>
+		</Grid>
+
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Classes="ok" Margin="3" Command="{Binding OKClickAsync}"/>
+			<Button Classes="cancel" Margin="3"
+					Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialog:DialogHost}, Path=CloseDialogCommand}"/>
+		</StackPanel>
+	</StackPanel>
+</UserControl>
