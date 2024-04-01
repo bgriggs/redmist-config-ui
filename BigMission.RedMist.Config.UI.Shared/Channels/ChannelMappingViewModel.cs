@@ -1,36 +1,37 @@
 ﻿using BigMission.Avalonia.Utilities;
 using BigMission.ChannelManagement.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using MsBox.Avalonia.Dto;
+using MsBox.Avalonia.Enums;
+using MsBox.Avalonia.Models;
+using MsBox.Avalonia;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive.Linq;
 using UnitsNet;
+using System.Text;
+using DialogHostAvalonia;
+using System.Collections.Immutable;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BigMission.RedMist.Config.UI.Shared.Channels;
 
+/// <summary>
+/// Used for adding or editing a channel mapping.
+/// </summary>
 [NotifyDataErrorInfo]
 public partial class ChannelMappingViewModel : ObservableValidator
 {
-    private ChannelMappingDto data = new();
-    public ChannelMappingDto Data
-    {
-        get => data;
-        set
-        {
-            data = value;
-            SelectedDataType = DataTypes.FirstOrDefault(d => d.Value == data.DataType);
-            SelectedBaseUnits = Units.FirstOrDefault(u => u == data.BaseUnitType);
-            SelectedDisplayUnits = Units.FirstOrDefault(u => u == data.DisplayUnitType);
-        }
-    }
+    private readonly ChannelMappingDto data;
+    public ChannelMappingDto Data => data;
 
     /// <summary>
     /// Available channels to use in validation.
     /// </summary>
-    public LargeObservableCollection<ChannelMappingRowViewModel> ParentChannels { get; set; } = [];
+    public ImmutableArray<ChannelMappingRowViewModel> ParentChannels { get; }
 
-    public ObservableCollection<DataTypeViewModel> DataTypes { get; set; } = [];
-    public ObservableCollection<string> Units { get; set; } = [];
+    public ObservableCollection<DataTypeViewModel> DataTypes { get; } = [];
+    public ObservableCollection<KeyValueViewModel> Units { get; } = [];
 
     /// <summary>
     /// Gets whether the user can edit the name and input parameters of the channel.
@@ -46,8 +47,6 @@ public partial class ChannelMappingViewModel : ObservableValidator
         set => SetProperty(Data.Name, value, Data, (u, n) => u.Name = n, validate: true);
     }
 
-    [MinLength(0)]
-    [MaxLength(7)]
     [CustomValidation(typeof(ChannelMappingViewModel), nameof(DuplicateAbbreviationValidate))]
     public string? Abbreviation
     {
@@ -61,24 +60,40 @@ public partial class ChannelMappingViewModel : ObservableValidator
         set => SetProperty(Data.IsStringValue, value, Data, (u, n) => u.IsStringValue = n, validate: false);
     }
 
-    private DataTypeViewModel? selectedDataType;
+    [Required]
     public DataTypeViewModel? SelectedDataType
     {
-        get { return selectedDataType; }
+        get => DataTypes.FirstOrDefault(d => d.Value == data.DataType);
         set
         {
-            if (SetProperty(ref selectedDataType, value))
+            ValidateProperty(value, nameof(SelectedDataType));
+            if (data.DataType != value?.Value)
             {
-                SetProperty(Data.DataType, value?.Value, Data, (u, n) => u.DataType = n, validate: false);
+                data.DataType = value?.Value;
+                OnPropertyChanged(nameof(SelectedDataType));
                 UpdateUnits();
             }
+            //if (SetProperty(data.DataType, value?.Value, data, (u, n) => u.DataType = n, validate: true))
+            //{
+            //    UpdateUnits();
+            //}
         }
     }
 
-    public string? SelectedBaseUnits
+    [Required]
+    public KeyValueViewModel? SelectedBaseUnits
     {
-        get => Data.BaseUnitType;
-        set => SetProperty(Data.BaseUnitType, value, Data, (u, n) => u.BaseUnitType = n, validate: false);
+        get => Units.FirstOrDefault(d => d.Value == Data.BaseUnitType);
+        set 
+        {
+            //SetProperty(Data.BaseUnitType, value?.Value, Data, (u, n) => u.BaseUnitType = n, validate: true);
+            ValidateProperty(value, nameof(SelectedBaseUnits));
+            if (data.BaseUnitType != value?.Value)
+            {
+                data.BaseUnitType = value?.Value;
+                OnPropertyChanged(nameof(SelectedBaseUnits));
+            }
+        }
     }
 
     [Range(0, 6)]
@@ -88,10 +103,20 @@ public partial class ChannelMappingViewModel : ObservableValidator
         set => SetProperty(Data.BaseDecimalPlaces, value, Data, (u, n) => u.BaseDecimalPlaces = n, validate: true);
     }
 
-    public string? SelectedDisplayUnits
+    [Required]
+    public KeyValueViewModel? SelectedDisplayUnits
     {
-        get => Data.DisplayUnitType;
-        set => SetProperty(Data.DisplayUnitType, value, Data, (u, n) => u.DisplayUnitType = n, validate: false);
+        get => Units.FirstOrDefault(d => d.Value == Data.DisplayUnitType);
+        set
+        {
+            ValidateProperty(value, nameof(SelectedDisplayUnits));
+            if (data.DisplayUnitType != value?.Value)
+            {
+                data.DisplayUnitType = value?.Value;
+                OnPropertyChanged(nameof(SelectedDisplayUnits));
+            }
+            //SetProperty(Data.DisplayUnitType, value?.Value, Data, (u, n) => u.DisplayUnitType = n, validate: true);
+        }
     }
 
     [Range(0, 6)]
@@ -101,8 +126,11 @@ public partial class ChannelMappingViewModel : ObservableValidator
         set => SetProperty(Data.DisplayDecimalPlaces, value, Data, (u, n) => u.DisplayDecimalPlaces = n, validate: true);
     }
 
-    public ChannelMappingViewModel()
+    public ChannelMappingViewModel(ChannelMappingDto data, ImmutableArray<ChannelMappingRowViewModel> parentChannels)
     {
+        this.data = data;
+        ParentChannels = parentChannels;
+
         DataTypes.Add(new DataTypeViewModel { DisplayName = "Temperature", Value = nameof(Temperature) });
         DataTypes.Add(new DataTypeViewModel { DisplayName = "Length", Value = nameof(Length) });
         DataTypes.Add(new DataTypeViewModel { DisplayName = "Volume", Value = nameof(Volume) });
@@ -116,6 +144,9 @@ public partial class ChannelMappingViewModel : ObservableValidator
         DataTypes.Add(new DataTypeViewModel { DisplayName = "Ratio", Value = nameof(Ratio) });
         DataTypes.Add(new DataTypeViewModel { DisplayName = "Current", Value = nameof(ElectricCurrent) });
         DataTypes.Add(new DataTypeViewModel { DisplayName = "Resistance", Value = nameof(ElectricResistance) });
+
+        SelectedDataType = DataTypes.FirstOrDefault(d => d.Value == data.DataType);
+        UpdateUnits();
     }
 
     /// <summary>
@@ -126,7 +157,10 @@ public partial class ChannelMappingViewModel : ObservableValidator
         if (string.IsNullOrWhiteSpace(name)) return new ValidationResult(null);
         if (context.ObjectInstance is not ChannelMappingViewModel map) { return new ValidationResult(null); }
         name = name.Trim();
-        var match = map.ParentChannels.FirstOrDefault(c => string.Compare(c.Name, name, StringComparison.CurrentCultureIgnoreCase) == 0);
+
+        // Remove the current channel from the list of existing names
+        var existingNames = map.ParentChannels.Where(c => c.Data.Id != map.Data.Id).Select(c => c.Name);
+        var match = existingNames.FirstOrDefault(c => string.Compare(c, name, StringComparison.CurrentCultureIgnoreCase) == 0);
         if (match is not null)
         {
             return new ValidationResult("There is already a channel with this name.");
@@ -140,10 +174,13 @@ public partial class ChannelMappingViewModel : ObservableValidator
     /// </summary>
     public static ValidationResult DuplicateAbbreviationValidate(string abbreviation, ValidationContext context)
     {
-        if (string.IsNullOrWhiteSpace(abbreviation)) return new ValidationResult(null);
+        if (string.IsNullOrWhiteSpace(abbreviation)) return ValidationResult.Success!;
         if (context.ObjectInstance is not ChannelMappingViewModel map) { return new ValidationResult(null); }
         abbreviation = abbreviation.Trim();
-        var match = map.ParentChannels.FirstOrDefault(c => string.Compare(c.Abbreviation, abbreviation, StringComparison.CurrentCultureIgnoreCase) == 0);
+        if (abbreviation.Length > 5) return new ValidationResult("Abbreviation must be 5 characters or less.");
+
+        var existingAbbreviations = map.ParentChannels.Where(c => c.Data.Id != map.Data.Id).Select(c => c.Abbreviation);
+        var match = existingAbbreviations.FirstOrDefault(c => string.Compare(c, abbreviation, StringComparison.CurrentCultureIgnoreCase) == 0);
         if (match is not null)
         {
             return new ValidationResult("There is already a channel with this abbreviation.");
@@ -160,12 +197,53 @@ public partial class ChannelMappingViewModel : ObservableValidator
             var q = Quantity.ByName[SelectedDataType.Value!];
             foreach (var unit in q.UnitInfos)
             {
-                Units.Add(unit.PluralName);
+                Units.Add(new KeyValueViewModel(unit.PluralName, unit.PluralName));
             }
+
+            SelectedBaseUnits = Units.FirstOrDefault(u => u.Value == data.BaseUnitType);
+            SelectedDisplayUnits = Units.FirstOrDefault(u => u.Value == data.DisplayUnitType);
         }
         else
         {
             Units.Clear();
         }
+    }
+
+    public async Task OKClickAsync()
+    {
+        ValidateAllProperties();
+        if (HasErrors)
+        {
+            var message = GetErrorMessage();
+            var box = MessageBoxManager.GetMessageBoxCustom(new MessageBoxCustomParams
+            {
+                ButtonDefinitions = [new ButtonDefinition { Name = "OK", IsDefault = true }],
+                ContentTitle = "Validation Errors",
+                ContentMessage = $"Fix validation errors before continuing.{Environment.NewLine}{message}",
+                Icon = Icon.Error,
+                MaxWidth = 500,
+            });
+
+            await box.ShowAsync();
+            return;
+        }
+
+        DialogHost.Close("MainDialogHost", this);
+    }
+
+    private string GetErrorMessage()
+    {
+        var sb = new StringBuilder();
+        foreach (var error in GetErrors())
+        {
+            sb.AppendLine(error.ErrorMessage);
+        }
+        return sb.ToString();
+    }
+
+    public class KeyValueViewModel(string displayName, string value)
+    {
+        public string DisplayName { get; set; } = displayName;
+        public string Value { get; set; } = value;
     }
 }

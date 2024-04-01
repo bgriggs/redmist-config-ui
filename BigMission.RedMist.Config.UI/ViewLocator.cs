@@ -26,24 +26,12 @@ public class ViewLocator : IDataTemplate
     {
         this.serviceProvider = serviceProvider;
         RegisterViewFactory<MainViewModel, MainView>();
-        //RegisterViewFactory<CanBusViewModel, CanBusView>();
-        RegisterViewFactory<ChannelsViewModel, ChannelsView>();
+        RegisterViewFactory<ChannelMappingViewModel, ChannelMappingEditDialog>();
         RegisterViewFactory<GeneralViewModel, GeneralView>();
         RegisterViewFactory<CanMessageDialogViewModel, CanMessageDialog>();
         RegisterViewFactory<CanChannelSelectionDialogViewModel, CanChannelSelectionDialog>();
         RegisterViewFactory<ChannelSelectionControlViewModel, ChannelSelectionControl>();
         RegisterViewFactory<ChannelSelectionDialogViewModel, ChannelSelectionDialog>();
-        //    RegisterViewFactory<AboutViewModel, AboutView>();
-
-        //    // Worksheet dialogs
-        //    RegisterViewFactory<TirePMIWorksheetViewModel, TirePMIWorksheet>();
-        //    RegisterViewFactory<TireWidthWorksheetViewModel, TireWidthWorksheet>();
-        //    RegisterViewFactory<TransmissionPMIWorksheetViewModel, TransmissionPMIWorksheet>();
-        //    RegisterViewFactory<DynoGraphViewModel, DynoGraph>();
-        //    RegisterViewFactory<EnginePMIWorksheetViewModel, EnginePMIWorksheet>();
-        //    RegisterViewFactory<MotorcycleFinalDriveWorksheetViewModel, MotorcycleFinalDriveWorksheet>();
-        //    RegisterViewFactory<ReferenceAreaWorksheetViewModel, ReferenceAreaWorksheet>();
-        //    RegisterViewFactory<TimeslipViewModel, Timeslip>();
     }
 
     public Control Build(object? data)

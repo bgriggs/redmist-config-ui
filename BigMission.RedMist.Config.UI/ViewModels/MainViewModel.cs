@@ -25,10 +25,10 @@ public partial class MainViewModel : ObservableObject
         this.channelProvider = channelProvider;
         CanBusViewModels = [];
         InitializeConfiguration();
-        configurationProvider.ConfigurationChanged += ConfigurationProvider_ConfigurationChanged;
+        configurationProvider.ConfigurationLoaded += ConfigurationProvider_ConfigurationLoaded;
     }
 
-    private void ConfigurationProvider_ConfigurationChanged()
+    private void ConfigurationProvider_ConfigurationLoaded()
     {
         InitializeConfiguration();
     }

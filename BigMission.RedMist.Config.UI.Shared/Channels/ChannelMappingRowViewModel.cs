@@ -1,8 +1,8 @@
 ﻿using BigMission.ChannelManagement.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DialogHostAvalonia;
-using MsBox.Avalonia.Enums;
 using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 
 namespace BigMission.RedMist.Config.UI.Shared.Channels;
 
@@ -11,8 +11,8 @@ namespace BigMission.RedMist.Config.UI.Shared.Channels;
 /// </summary>
 public partial class ChannelMappingRowViewModel : ObservableObject
 {
-    public ChannelMappingDto Data { get; set; } = new();
-    public ChannelsViewModel? ParentVm { get; set; }
+    public ChannelMappingDto Data { get; }
+    public ChannelsViewModel? ParentVm { get; }
 
     [ObservableProperty]
     private bool isVisible = true;
@@ -32,12 +32,18 @@ public partial class ChannelMappingRowViewModel : ObservableObject
     public string? Source { get; set; }
     public bool IsReserved => Data.IsReserved;
 
+    public ChannelMappingRowViewModel(ChannelMappingDto data, ChannelsViewModel? parentVm)
+    {
+        Data = data;
+        ParentVm = parentVm;
+    }
+
     public async Task EditChannelClick(object obj)
     {
         if (obj is ChannelMappingDto map)
         {
             var copyMap = map.Copy();
-            var chVm = new ChannelMappingViewModel { Data = copyMap, ParentChannels = ParentVm?.Channels ?? [] };
+            var chVm = new ChannelMappingViewModel(copyMap, [.. ParentVm?.Channels]);
             var result = await DialogHost.Show(chVm, "MainDialogHost");
             if (result is ChannelMappingViewModel editedMap)
             {

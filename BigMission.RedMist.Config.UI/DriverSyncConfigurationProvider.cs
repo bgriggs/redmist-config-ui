@@ -8,7 +8,7 @@ namespace BigMission.RedMist.Config.UI;
 public class DriverSyncConfigurationProvider : IDriverSyncConfigurationProvider
 {
     private readonly MasterDriverSyncConfig config;
-    public event Action? ConfigurationChanged;
+    public event Action? ConfigurationLoaded;
 
     public DriverSyncConfigurationProvider()
     {

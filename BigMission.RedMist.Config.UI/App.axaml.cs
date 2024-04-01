@@ -80,7 +80,6 @@ public partial class App : Application
     private void OnShutdownRequested(object? sender, ShutdownRequestedEventArgs e)
         => _ = _host!.StopAsync(_cancellationTokenSource!.Token);
 
-    //[Singleton(typeof(WindowsSettingsProvider), typeof(ISettingsProvider))]
     [Singleton(typeof(ChannelProvider))]
     [Singleton(typeof(CanBusChannelDependencyCheck), typeof(IChannelDependencyCheck))]
     internal static partial void ConfigureServices(IServiceCollection services);
@@ -100,5 +99,6 @@ public partial class App : Application
     [Singleton(typeof(CanChannelSelectionDialog))]
     [Singleton(typeof(ChannelSelectionControl))]
     [Singleton(typeof(ChannelSelectionDialog))]
+    [Singleton(typeof(ChannelMappingEditDialog))]
     internal static partial void ConfigureViews(IServiceCollection services);
 }

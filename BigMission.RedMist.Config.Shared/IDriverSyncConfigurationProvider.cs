@@ -3,7 +3,7 @@
 public interface IDriverSyncConfigurationProvider
 {
     // Configuration changed event
-    event Action ConfigurationChanged;
+    event Action ConfigurationLoaded;
 
     MasterDriverSyncConfig GetConfiguration();
 }

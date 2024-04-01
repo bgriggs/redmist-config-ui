@@ -8,7 +8,7 @@ namespace BigMission.RedMist.Config.UI.Shared.Channels;
 public partial class ChannelSelectionDialogViewModel : ObservableObject
 {
     private readonly ChannelProvider channelProvider;
-    public LargeObservableCollection<ChannelMappingRowViewModel> Channels { get; } = [];
+    private LargeObservableCollection<ChannelMappingRowViewModel> Channels { get; } = [];
 
     private string searchText = string.Empty;
     public string SearchText
@@ -61,7 +61,7 @@ public partial class ChannelSelectionDialogViewModel : ObservableObject
             Channels.Clear();
             foreach (var channel in chDtos)
             {
-                Channels.Add(new ChannelMappingRowViewModel { Data = channel });
+                Channels.Add(new ChannelMappingRowViewModel(channel, null));
             }
         }
         finally

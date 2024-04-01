@@ -40,7 +40,7 @@ public partial class ChannelsViewModel : ObservableValidator
             Channels.Clear();
             foreach (var channel in data.ChannelMappings)
             {
-                Channels.Add(new ChannelMappingRowViewModel { Data = channel, ParentVm = this });
+                Channels.Add(new ChannelMappingRowViewModel(channel, this));
             }
         }
         finally
@@ -61,11 +61,12 @@ public partial class ChannelsViewModel : ObservableValidator
 
     public async Task AddChannelClick()
     {
-        var result = await DialogHost.Show(new ChannelMappingViewModel { ParentChannels = Channels }, "MainDialogHost");
+        var dto = new ChannelMappingDto { DataType = "Temperature", BaseUnitType = "DegreesFahrenheit", DisplayUnitType = "DegreesFahrenheit" };
+        var result = await DialogHost.Show(new ChannelMappingViewModel(dto, [..Channels]), "MainDialogHost");
         if (result is ChannelMappingViewModel map)
         {
             map.Data.Id = data.IncNextId();
-            var rowVm = new ChannelMappingRowViewModel { Data = map.Data, ParentVm = this };
+            var rowVm = new ChannelMappingRowViewModel(map.Data, this);
             Channels.Add(rowVm);
         }
     }
@@ -77,7 +78,7 @@ public partial class ChannelsViewModel : ObservableValidator
         try
         {
             Channels.RemoveAt(index);
-            var rowVm = new ChannelMappingRowViewModel { Data = updatedMapping, ParentVm = this };
+            var rowVm = new ChannelMappingRowViewModel(updatedMapping, this);
             Channels.Insert(index, rowVm);
         }
         finally { Channels.EndBulkOperation(); }

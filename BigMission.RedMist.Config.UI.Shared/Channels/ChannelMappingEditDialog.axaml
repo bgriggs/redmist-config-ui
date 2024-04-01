@@ -1,0 +1,84 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ch="clr-namespace:BigMission.RedMist.Config.UI.Shared.Channels"
+			 xmlns:dialog="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
+             x:Class="BigMission.RedMist.Config.UI.Shared.Channels.ChannelMappingEditDialog"
+			 x:DataType="ch:ChannelMappingViewModel">
+	<StackPanel>
+		<TextBlock Classes="theme-text-heading" Text="Add/Edit Channel" Margin="4"/>
+		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+			  ColumnDefinitions="Auto,Auto,*" Margin="10">
+			<!--Name-->
+			<TextBlock Text="Name" Classes="form"/>
+			<TextBox Grid.Column="1" Classes="form" MinWidth="130" Text="{Binding Name}" HorizontalAlignment="Left"
+					 IsEnabled="{Binding !IsReserved}"/>
+			<TextBlock Classes="note size-xs" Text="Reference name of the channel." Grid.Row="1" Grid.ColumnSpan="3"/>
+
+			<!--Reserved Channel-->
+			<TextBlock Text="Reserved Channel:" Grid.Row="2" Classes="form"/>
+			<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding IsReserved, Converter={StaticResource BoolToYesNoConverter}}"
+					   HorizontalAlignment="Left" VerticalAlignment="Center"/>
+			<TextBlock Classes="note size-xs" Text="Reserved channels are implemented by the system. Changes are limited."
+					   Grid.Row="3" Grid.ColumnSpan="3"/>
+
+			<!--Abbreviation-->
+			<TextBlock Text="Abbreviation" Grid.Row="4" Classes="form"/>
+			<TextBox Grid.Row="4" Grid.Column="1" Classes="form" MinWidth="70"
+					 Text="{Binding Abbreviation}" HorizontalAlignment="Left"/>
+			<TextBlock Classes="note size-xs" Text="Short display name." Grid.Row="5" Grid.ColumnSpan="3"/>
+
+			<!--String Value-->
+			<TextBlock Text="String Value" Grid.Row="6" Classes="form"/>
+			<ToggleSwitch Grid.Row="6" Grid.Column="1" Classes="form" MinWidth="70" IsChecked="{Binding IsStringValue}"
+						  HorizontalAlignment="Left" IsEnabled="{Binding !IsReserved}"/>
+			<TextBlock Classes="note size-xs" Text="Select for non-numeric types, e.g. Enums or Table strings." Grid.Row="7"
+					   Grid.ColumnSpan="3"/>
+
+			<!--Data Type-->
+			<TextBlock Text="Data Type" Grid.Row="8" Classes="form" IsVisible="{Binding !IsStringValue}"/>
+			<ComboBox Grid.Row="8" Grid.Column="1" Classes="form" MinWidth="120" ItemsSource="{Binding DataTypes}"
+					  SelectedItem="{Binding SelectedDataType}" HorizontalAlignment="Left" IsVisible="{Binding !IsStringValue}"
+					  IsEnabled="{Binding !IsReserved}" DisplayMemberBinding="{Binding DisplayName}"/>
+			<TextBlock Classes="note size-xs" Text="Channel quantity." Grid.Row="9" Grid.ColumnSpan="3"
+					   IsVisible="{Binding !IsStringValue}"/>
+
+			<!--Base Units-->
+			<TextBlock Text="Base Units" Grid.Row="10" Classes="form" IsVisible="{Binding !IsStringValue}"/>
+			<ComboBox Grid.Row="10" Grid.Column="1" Classes="form" Width="150" ItemsSource="{Binding Units}"
+					  SelectedItem="{Binding SelectedBaseUnits}" HorizontalAlignment="Left" IsVisible="{Binding !IsStringValue}"
+					  IsEnabled="{Binding !IsReserved}" DisplayMemberBinding="{Binding DisplayName}"/>
+			<TextBlock Classes="note size-xs" Text="Units coming into the channel." Grid.Row="11" Grid.ColumnSpan="3"
+					   IsVisible="{Binding !IsStringValue}"/>
+
+			<!--Base Decimal Places-->
+			<TextBlock Text="Base Decimal Places" Grid.Row="12" Classes="form" IsVisible="{Binding !IsStringValue}"/>
+			<TextBox Grid.Row="12" Grid.Column="1" Classes="form" MinWidth="20" Text="{Binding BaseDecimalPlaces}"
+					 HorizontalAlignment="Left" IsVisible="{Binding !IsStringValue}" IsEnabled="{Binding !IsReserved}"/>
+			<TextBlock Classes="note size-xs" Text="Decimal resolution of the base units." Grid.Row="13"
+					   Grid.ColumnSpan="3" IsVisible="{Binding !IsStringValue}"/>
+
+			<!--Display Units-->
+			<TextBlock Text="Display Units" Grid.Row="14" Classes="form" IsVisible="{Binding !IsStringValue}"/>
+			<ComboBox Grid.Row="14" Grid.Column="1" Classes="form" Width="150" ItemsSource="{Binding Units}"
+					  SelectedItem="{Binding SelectedDisplayUnits}" HorizontalAlignment="Left" 
+					  IsVisible="{Binding !IsStringValue}" DisplayMemberBinding="{Binding DisplayName}"/>
+			<TextBlock Classes="note size-xs" Text="Units to convert to on output." Grid.Row="15" Grid.ColumnSpan="3"
+					   IsVisible="{Binding !IsStringValue}"/>
+
+			<!--Display Decimal Places-->
+			<TextBlock Text="Display Decimal Places" Grid.Row="16" Classes="form" IsVisible="{Binding !IsStringValue}"/>
+			<TextBox Grid.Row="16" Grid.Column="1" Classes="form" MinWidth="20" Text="{Binding DisplayDecimalPlaces}"
+					 HorizontalAlignment="Left" IsVisible="{Binding !IsStringValue}"/>
+			<TextBlock Classes="note size-xs" Text="Decimal resolution to output from the channel." Grid.Row="17"
+					   Grid.ColumnSpan="3" IsVisible="{Binding !IsStringValue}"/>
+		</Grid>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Classes="ok" Margin="3" Command="{Binding OKClickAsync}"/>
+			<Button Classes="cancel" Margin="3"
+					Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialog:DialogHost}, Path=CloseDialogCommand}"/>
+		</StackPanel>
+	</StackPanel>
+</UserControl>
