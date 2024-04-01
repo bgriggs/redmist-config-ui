@@ -9,14 +9,24 @@
 	<TabControl ItemsSource="{Binding CanBusViewModels}">
 		<TabControl.ItemTemplate>
 			<DataTemplate>
-				<TextBlock Text="{Binding Name}" />
+				<TextBlock Text="{Binding Name}"/>
 			</DataTemplate>
 		</TabControl.ItemTemplate>
 		<TabControl.ContentTemplate>
 			<DataTemplate>
-				<l:CanBusTable Items="{Binding Messages}"/>
+				<Grid RowDefinitions="Auto,*">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Interface Name:" Classes="form"/>
+						<TextBox Text="{Binding InterfaceName}" Classes="form"/>
+						<TextBlock Text="Bit Rate:" Classes="form" Margin="18,3,3,3"/>
+						<ComboBox ItemsSource="{Binding BitRates}" DisplayMemberBinding="{Binding Name}" SelectedItem="{Binding SelectedBitRate}" Classes="form" Width="85"/>
+						<TextBlock Text="Silent On CAN Bus:" Classes="form" Margin="18,3,3,3"/>
+						<ToggleSwitch IsChecked="{Binding IsSilentOnCanBus}" OnContent="Yes" OffContent="No" Classes="form"/>
+					</StackPanel>
+					<l:CanBusTable Items="{Binding Messages}" Grid.Row="1" Margin="0,3,0,0"/>
+				</Grid>
 			</DataTemplate>
 		</TabControl.ContentTemplate>
 	</TabControl>
-	
+
 </UserControl>

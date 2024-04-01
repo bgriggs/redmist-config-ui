@@ -3,7 +3,7 @@
 namespace BigMission.RedMist.Config.Shared.CanBus;
 
 /// <summary>
-/// Finds all the places in CAN Bus where a channel is used.
+/// Finds all the places in CAN Bus where a Channel is used.
 /// </summary>
 public class CanBusChannelDependencyCheck : IChannelDependencyCheck
 {
@@ -36,7 +36,7 @@ public class CanBusChannelDependencyCheck : IChannelDependencyCheck
             {
                 foreach (var assignment in message.ChannelAssignments)
                 {
-                    var ca = new ChannelDependency(assignment.ChannelId, "CAN Bus", $"CAN{canBus.Id}::0x{message.CanId:X}::offset={assignment.Offset}");
+                    var ca = new ChannelDependency(assignment.ChannelId, "CAN Bus", $"CAN-{canBus.InterfaceName}::0x{message.CanId:X}::offset={assignment.Offset}");
                     channelDependencies.Add(ca);
                 }
             }

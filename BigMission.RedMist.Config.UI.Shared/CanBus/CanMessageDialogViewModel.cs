@@ -1,15 +1,18 @@
 ﻿using BigMission.RedMist.Config.Shared.CanBus;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DialogHostAvalonia;
+using MsBox.Avalonia;
 using MsBox.Avalonia.Dto;
 using MsBox.Avalonia.Enums;
 using MsBox.Avalonia.Models;
-using MsBox.Avalonia;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace BigMission.RedMist.Config.UI.Shared.CanBus;
 
+/// <summary>
+/// Creating or editing a CAN Message row's configuration.
+/// </summary>
 public partial class CanMessageDialogViewModel : ObservableValidator
 {
     public CanMessageConfigDto CanMessageConfigDto { get; }
@@ -74,13 +77,12 @@ public partial class CanMessageDialogViewModel : ObservableValidator
     public int TransmitFrequencyMs
     {
         get { return (int)CanMessageConfigDto.TransmitRate.TotalMilliseconds; }
-        set 
-        { 
+        set
+        {
             ValidateProperty(value);
-            CanMessageConfigDto.TransmitRate = TimeSpan.FromMilliseconds(value); 
+            CanMessageConfigDto.TransmitRate = TimeSpan.FromMilliseconds(value);
         }
     }
-
 
     public CanMessageDialogViewModel(CanMessageConfigDto canMessageConfigDto)
     {

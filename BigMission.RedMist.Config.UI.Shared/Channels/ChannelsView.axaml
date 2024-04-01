@@ -10,7 +10,7 @@
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<ch:ChannelsViewModel />
+		<!--<ch:ChannelsViewModel />-->
 	</Design.DataContext>
 	<UserControl.Styles>
 		<Style Selector="TextBlock.field">
@@ -134,7 +134,7 @@
 
 			<!--Channel Grid-->
 			<DataGrid x:Name="channelDataGrid" Margin="3,10,3,3" ItemsSource="{Binding Channels}" MinHeight="150"
-					  CanUserSortColumns="False" SelectionMode="Single"
+					  CanUserSortColumns="False" SelectionMode="Single" IsReadOnly="True"
 					  BorderThickness="1" BorderBrush="Gray"
 					  Tapped="DataGrid_Tapped" DoubleTapped="DataGrid_DoubleTapped" KeyUp="DataGrid_KeyUp">
 				<DataGrid.Styles>

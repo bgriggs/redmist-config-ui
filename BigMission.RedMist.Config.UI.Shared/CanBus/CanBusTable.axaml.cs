@@ -6,8 +6,6 @@ using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Media;
-using BigMission.RedMist.Config.Shared;
-using BigMission.RedMist.Config.Shared.CanBus;
 using System.Collections;
 using System.Collections.ObjectModel;
 
@@ -43,22 +41,66 @@ public partial class CanBusTable : UserControl
         {
             if (e.OldValue is ObservableCollection<CanMessageViewModel> ov)
             {
-                ov.CollectionChanged -= ViewModelItems_CollectionChanged;
+                ov.CollectionChanged -= MessageRows_CollectionChanged;
+                foreach (var m in ov)
+                {
+                    m.ChannelAssignments.CollectionChanged -= ChannelAssignments_CollectionChanged;
+                }
             }
 
             if (e.NewValue is ObservableCollection<CanMessageViewModel> nv)
             {
-                nv.CollectionChanged += ViewModelItems_CollectionChanged;
+                nv.CollectionChanged += MessageRows_CollectionChanged;
+                foreach (var m in nv)
+                {
+                    m.ChannelAssignments.CollectionChanged += ChannelAssignments_CollectionChanged;
+                }
                 SpRows.Children.Clear();
                 AddRows(nv);
             }
         }
     }
 
-    private void ViewModelItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    /// <summary>
+    /// Track changes on user changes to the CAN Channel Assignments.
+    /// </summary>
+    private void MessageRows_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        SpRows.Children.Clear();
-        AddRows((ObservableCollection<CanMessageViewModel>)sender!);
+        // Clean up old event handlers for removed message rows
+        if (e.OldItems != null)
+        {
+            foreach (CanMessageViewModel old in e.OldItems)
+            {
+                old.ChannelAssignments.CollectionChanged -= ChannelAssignments_CollectionChanged;
+            }
+        }
+      
+        // Add new event handlers to track new CAN message assignments
+        if (e.NewItems != null)
+        {
+            foreach (CanMessageViewModel newItem in e.NewItems)
+            {
+                newItem.ChannelAssignments.CollectionChanged += ChannelAssignments_CollectionChanged;
+            }
+        }
+
+        if (Items is ObservableCollection<CanMessageViewModel> chs)
+        {
+            SpRows.Children.Clear();
+            AddRows(chs);
+        }
+    }
+
+    /// <summary>
+    /// When a user makes a change to a Message's CAN Channel Assignments, update the UI.
+    /// </summary>
+    private void ChannelAssignments_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        if (Items is ObservableCollection<CanMessageViewModel> chs)
+        {
+            SpRows.Children.Clear();
+            AddRows(chs);
+        }
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
@@ -96,7 +138,7 @@ public partial class CanBusTable : UserControl
         }
     }
 
-    private static Control CreatedHeaderCell(string text, int width, bool isLast = false)
+    private static Border CreatedHeaderCell(string text, int width, bool isLast = false)
     {
         var b = new Border
         {
@@ -141,11 +183,11 @@ public partial class CanBusTable : UserControl
 
             for (int i = 0; i < item.Data.Length;)
             {
-                var channel = item.Data.ChannelAssignments.FirstOrDefault(c => c.Offset == i);
-                var vm = new ByteOverlayViewModel(channel, item.ChannelProvider);
+                var channel = item.ChannelAssignments.FirstOrDefault(c => c.Offset == i);
+                var vm = new ByteOverlayViewModel(channel, item.ChannelProvider, item);
                 if (channel == null)
                 {
-                    vm.AvailableBytes = GetAvailableBytes(item.Data.ChannelAssignments, i);
+                    vm.CurrentOffset = i;
                 }
 
                 var cell = CreateChannelCell(vm);
@@ -165,7 +207,7 @@ public partial class CanBusTable : UserControl
         }
     }
 
-    private Control CreateCell(CanMessageViewModel item, string template, int width, string binding = ".") => new ContentControl
+    private ContentControl CreateCell(CanMessageViewModel item, string template, int width, string binding = ".") => new ContentControl
     {
         [!ContentProperty] = new Binding(binding),
         DataContext = item,
@@ -173,7 +215,7 @@ public partial class CanBusTable : UserControl
         Width = width,
     };
 
-    private Control CreateChannelCell(ByteOverlayViewModel vm)
+    private ContentControl CreateChannelCell(ByteOverlayViewModel vm)
     {
         var cc = new ContentControl
         {
@@ -183,25 +225,5 @@ public partial class CanBusTable : UserControl
             Width = ByteColumnWidth * (vm.Channel?.Length ?? 1),
         };
         return cc;
-    }
-
-    /// <summary>
-    /// Determine the number of available bytes after the current offset.
-    /// </summary>
-    private int GetAvailableBytes(IEnumerable<CanChannelAssignmentConfigDto> channels, int currentOffset)
-    {
-        int availableBytes = 1;
-        for (int i = currentOffset + 1; i < 8; i++)
-        {
-            if (channels.FirstOrDefault(c => c.Offset == i) == null)
-            {
-                availableBytes++;
-            }
-            else
-            {
-                break;
-            }
-        }
-        return availableBytes;
     }
 }

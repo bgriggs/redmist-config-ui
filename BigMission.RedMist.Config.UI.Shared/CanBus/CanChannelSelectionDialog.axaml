@@ -3,16 +3,45 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:dialog="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="350"
              x:Class="BigMission.RedMist.Config.UI.Shared.CanBus.CanChannelSelectionDialog">
 	<StackPanel>
-		<TextBlock Classes="theme-text-heading" Text="CAN Channel Assignmnet" Margin="4"/>
-		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto" HorizontalAlignment="Center" Margin="25,5,25,10">
+		<TextBlock Classes="theme-text-heading" Text="CAN Channel Assignment" Margin="4"/>
+		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto" HorizontalAlignment="Center" Margin="25,5,25,10">
 			<TextBlock Text="Channel" Classes="form"/>
 			<ContentControl Content="{Binding ChannelSelectionViewModel}" Grid.Column="1"/>
+			
+			<!--Offset-->
+			<TextBlock Text="Offset" Classes="form" Grid.Row="1"/>
+			<TextBox Classes="form" Text="{Binding Offset}" Grid.Row="1" Grid.Column="1" Width="40"/>
+			
+			<!--Length-->
+			<TextBlock Text="Length" Classes="form" Grid.Row="2"/>
+			<TextBox Classes="form" Text="{Binding Length}" Grid.Row="2" Grid.Column="1" Width="40"/>
+			
+			<!--Mask-->
+			<TextBlock Text="Mask (hex)" Classes="form" Grid.Row="3"/>
+			<TextBox Classes="form" Text="{Binding Mask}" Grid.Row="3" Grid.Column="1" Width="100"/>
+			
+			<!--Signed-->
+			<TextBlock Text="Signed" Classes="form" Grid.Row="4"/>
+			<ToggleSwitch IsChecked="{Binding IsSigned}" OnContent="Yes" OffContent="No" Grid.Row="4" Grid.Column="1"/>
+			
+			<!--Multiplier-->
+			<TextBlock Text="Multiplier" Classes="form" Grid.Row="5"/>
+			<TextBox Classes="form" Text="{Binding FormulaMultiplier}" Grid.Row="5" Grid.Column="1" Width="80"/>
+			
+			<!--Divider-->
+			<TextBlock Text="Divider" Classes="form" Grid.Row="6"/>
+			<TextBox Classes="form" Text="{Binding FormulaDivider}" Grid.Row="6" Grid.Column="1" Width="80"/>
+			
+			<!--Const-->
+			<TextBlock Text="Constant" Classes="form" Grid.Row="7"/>
+			<TextBox Classes="form" Text="{Binding FormulaConst}" Grid.Row="7" Grid.Column="1" Width="80"/>
 		</Grid>
 
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Content="Unassign Channel" Margin="3" Command="{Binding UnassignChannelAsync}"/>
 			<Button Classes="ok" Margin="3" Command="{Binding OKClickAsync}"/>
 			<Button Classes="cancel" Margin="3"
 					Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialog:DialogHost}, Path=CloseDialogCommand}"/>

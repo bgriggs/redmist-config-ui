@@ -1,12 +1,11 @@
 using Avalonia.Controls;
 
-namespace BigMission.RedMist.Config.UI.Shared.CanBus
+namespace BigMission.RedMist.Config.UI.Shared.CanBus;
+
+public partial class CanBusView : UserControl
 {
-    public partial class CanBusView : UserControl
+    public CanBusView()
     {
-        public CanBusView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

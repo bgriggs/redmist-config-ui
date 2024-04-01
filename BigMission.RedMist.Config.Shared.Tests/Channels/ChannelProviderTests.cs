@@ -16,7 +16,7 @@ public class ChannelProviderTests
     {
         channelDependencyCheckMock = new Mock<IChannelDependencyCheck>();
         configurationProviderMock = new Mock<IDriverSyncConfigurationProvider>();
-        channelProvider = new ChannelProvider(new List<IChannelDependencyCheck> { channelDependencyCheckMock.Object }, configurationProviderMock.Object);
+        channelProvider = new ChannelProvider([channelDependencyCheckMock.Object], configurationProviderMock.Object);
     }
 
     [TestMethod]
@@ -129,5 +129,85 @@ public class ChannelProviderTests
 
         // Assert
         Assert.AreEqual(3, result?.Length);
+    }
+
+
+    [TestMethod]
+    public void GetChannel_ShouldReturnChannel()
+    {
+        // Arrange
+        var channelMappings = new[]
+        {
+            new ChannelMappingDto { Id = 1 },
+            new ChannelMappingDto { Id = 2 },
+            new ChannelMappingDto { Id = 3 },
+        };
+        var configuration = new MasterDriverSyncConfig { ChannelConfig = new ChannelConfigDto() };
+        configuration.ChannelConfig.ChannelMappings.AddRange(channelMappings);
+        configurationProviderMock?.Setup(c => c.GetConfiguration()).Returns(configuration);
+
+        // Act
+        var result = channelProvider?.GetChannel(1);
+
+        // Assert
+        Assert.AreEqual(1, result?.Id);
+    }
+
+    [TestMethod]
+    public void GetChannel_ShouldReturnNull()
+    {
+        // Arrange
+        var channelMappings = new[]
+        {
+            new ChannelMappingDto { Id = 1 },
+            new ChannelMappingDto { Id = 2 },
+            new ChannelMappingDto { Id = 3 },
+        };
+        var configuration = new MasterDriverSyncConfig { ChannelConfig = new ChannelConfigDto() };
+        configuration.ChannelConfig.ChannelMappings.AddRange(channelMappings);
+        configurationProviderMock?.Setup(c => c.GetConfiguration()).Returns(configuration);
+
+        // Act
+        var result = channelProvider?.GetChannel(10);
+
+        // Assert
+        Assert.IsNull(result);
+    }
+
+    [TestMethod]
+    public void GetAllChannels_ShouldReturnAllThree()
+    {
+        // Arrange
+        var channelMappings = new[]
+        {
+            new ChannelMappingDto { Id = 1 },
+            new ChannelMappingDto { Id = 2 },
+            new ChannelMappingDto { Id = 3 },
+        };
+        var configuration = new MasterDriverSyncConfig { ChannelConfig = new ChannelConfigDto() };
+        configuration.ChannelConfig.ChannelMappings.AddRange(channelMappings);
+        configurationProviderMock?.Setup(c => c.GetConfiguration()).Returns(configuration);
+
+        // Act
+        var result = channelProvider?.GetAllChannels();
+
+        // Assert
+        Assert.AreEqual(3, result?.Length);
+    }
+
+    [TestMethod]
+    public void GetAllChannels_ShouldReturnEmpty()
+    {
+        // Arrange
+        var channelMappings = Array.Empty<ChannelMappingDto>();
+        var configuration = new MasterDriverSyncConfig { ChannelConfig = new ChannelConfigDto() };
+        configuration.ChannelConfig.ChannelMappings.AddRange(channelMappings);
+        configurationProviderMock?.Setup(c => c.GetConfiguration()).Returns(configuration);
+
+        // Act
+        var result = channelProvider?.GetAllChannels();
+
+        // Assert
+        Assert.AreEqual(0, result?.Length);
     }
 }

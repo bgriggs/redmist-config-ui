@@ -3,10 +3,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:c="clr-namespace:BigMission.RedMist.Config.UI.Shared.Channels"
-             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="150"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="50"
              x:Class="BigMission.RedMist.Config.UI.Shared.Channels.ChannelSelectionControl"
 			 x:DataType="c:ChannelSelectionControlViewModel">
 	<StackPanel Orientation="Horizontal">
-		<Button Content="Select Channel" Command="{Binding SelectChannelAsync}"/>
+		<Button Height="28" Width="170">
+			<Grid RowDefinitions="Auto" ColumnDefinitions="Auto,*,Auto" Width="165" VerticalAlignment="Center">
+				<Image Height="19" Source="{StaticResource Unicons_Channel}" Grid.Column="0" VerticalAlignment="Center"/>
+				<TextBlock Text="{Binding ChannelName}" Grid.Column="1" Margin="5,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+				<Image Height="15" Source="{StaticResource Fontisto_Locked}" Grid.Column="2" IsVisible="{Binding IsReserved}" ToolTip.Tip="Reserved" VerticalAlignment="Center"/>
+			</Grid>
+		</Button>
+		<Button Content="Select Channel" Command="{Binding SelectChannelAsync}" IsVisible="{Binding IsSelectable}" Height="28" Margin="3,0,0,0"/>
 	</StackPanel>
 </UserControl>

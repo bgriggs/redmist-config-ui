@@ -7,7 +7,7 @@ namespace BigMission.RedMist.Config.UI.Shared.General;
 [NotifyDataErrorInfo]
 public partial class GeneralViewModel : ObservableValidator
 {
-    private GeneralConfigDto data;
+    private readonly GeneralConfigDto data;
 
     [Required(ErrorMessage = "Car is required.")]
     [MinLength(1)]

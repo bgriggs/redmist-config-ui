@@ -1,8 +1,10 @@
 ﻿namespace BigMission.RedMist.Config.Shared.CanBus;
 
+/// <summary>
+/// Represents a CAN packet with a unique 11 or 29 bit identifier.
+/// </summary>
 public class CanMessageConfigDto
 {
-    public int Id { get; set; }
     public bool IsEnabled { get; set; } = true;
 
     /// <summary>

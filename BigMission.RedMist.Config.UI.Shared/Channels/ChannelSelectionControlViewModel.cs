@@ -1,6 +1,5 @@
-﻿using BigMission.RedMist.Config.Shared;
+﻿using BigMission.ChannelManagement.Shared;
 using BigMission.RedMist.Config.Shared.Channels;
-using BigMission.RedMist.Config.UI.Shared.CanBus;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DialogHostAvalonia;
 
@@ -9,16 +8,23 @@ namespace BigMission.RedMist.Config.UI.Shared.Channels;
 public partial class ChannelSelectionControlViewModel : ObservableObject
 {
     private readonly ChannelProvider channelProvider;
+
     [ObservableProperty]
-    private int selectedChannelId;
+    private bool isSelectable;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsReserved))]
+    [NotifyPropertyChangedFor(nameof(ChannelName))]
+    private ChannelMappingDto? selectedChannelMapping;
+
+    public bool IsReserved
+    {
+        get { return SelectedChannelMapping?.IsReserved ?? false; }
+    }
 
     public string ChannelName
     {
-        get
-        {
-            var channel = channelProvider.GetChannel(SelectedChannelId);
-            return channel?.Name ?? "???";
-        }
+        get { return SelectedChannelMapping?.Name ?? "Unassigned"; }
     }
 
     public ChannelSelectionControlViewModel(ChannelProvider channelProvider)
@@ -36,9 +42,9 @@ public partial class ChannelSelectionControlViewModel : ObservableObject
 
         var vm = new ChannelSelectionDialogViewModel(channelProvider);
         var result = await DialogHost.Show(vm, dialogHost);
-        if (result is ChannelSelectionDialogViewModel)
+        if (result is ChannelMappingDto ch)
         {
-
+            SelectedChannelMapping = ch;
         }
     }
 }
