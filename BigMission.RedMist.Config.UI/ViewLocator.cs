@@ -26,7 +26,7 @@ public class ViewLocator : IDataTemplate
     {
         this.serviceProvider = serviceProvider;
         RegisterViewFactory<MainViewModel, MainView>();
-        RegisterViewFactory<ChannelMappingViewModel, ChannelMappingEditDialog>();
+        RegisterViewFactory<ChannelMappingEditViewModel, ChannelMappingEditDialog>();
         RegisterViewFactory<GeneralViewModel, GeneralView>();
         RegisterViewFactory<CanMessageDialogViewModel, CanMessageDialog>();
         RegisterViewFactory<CanChannelSelectionDialogViewModel, CanChannelSelectionDialog>();

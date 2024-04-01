@@ -37,7 +37,7 @@ public partial class MainViewModel : ObservableObject
     {
         var config = configurationProvider.GetConfiguration();
         GeneralViewModel = new GeneralViewModel(config.GeneralConfig);
-        ChannelsViewModel = new ChannelsViewModel(config.ChannelConfig);
+        ChannelsViewModel = new ChannelsViewModel(config.ChannelConfig, channelProvider);
 
         CanBusViewModels.Clear();
         for (int i = 0; i < config.CanBusConfigs.Count; i++)

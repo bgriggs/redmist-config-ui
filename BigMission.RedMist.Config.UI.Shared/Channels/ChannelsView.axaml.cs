@@ -9,7 +9,17 @@ namespace BigMission.RedMist.Config.UI.Shared.Channels
         public ChannelsView()
         {
             InitializeComponent();
+            //this.Loaded += ChannelsView_Loaded;
         }
+
+        //private void ChannelsView_Loaded(object? sender, global::Avalonia.Interactivity.RoutedEventArgs e)
+        //{
+        //    var vm = DataContext as ChannelsViewModel;
+        //    if (vm is not null)
+        //    {
+        //        vm.RefreshIsUsed();
+        //    }
+        //}
 
         /// <summary>
         /// Support editing row from tap on a touch screen.
@@ -52,5 +62,7 @@ namespace BigMission.RedMist.Config.UI.Shared.Channels
                 await rvm.DeleteChannel(rvm.Data);
             }
         }
+
+        
     }
 }

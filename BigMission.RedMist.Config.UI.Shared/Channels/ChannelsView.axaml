@@ -23,7 +23,7 @@
 				</StackPanel>
 			</Button>
 			<TextBlock Text="Search:" VerticalAlignment="Center" Margin="20,0,0,0"/>
-			<TextBox Width="180" Text="{Binding SearchText}"/>
+			<TextBox Width="150" Classes="form" Text="{Binding SearchText}"/>
 			<Button Classes="icon" Command="{Binding ClearSearch}" ToolTip.Tip="Clear search">
 				<Image Source="{StaticResource closeicon}"/>
 			</Button>
@@ -58,8 +58,8 @@
 				</DataGridTemplateColumn>
 				<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
 				<DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
-				<DataGridTextColumn Header="Used" Binding="{Binding IsUsed, Converter={StaticResource BoolToYesNoConverter}}"/>
-				<DataGridTextColumn Header="Source" Binding="{Binding Source}"/>
+				<!--<DataGridTextColumn Header="Used" Binding="{Binding IsUsed, Converter={StaticResource BoolToYesNoConverter}}"/>-->
+				<!--<DataGridTextColumn Header="Source" Binding="{Binding Source}"/>-->
 				<DataGridTextColumn Header="Data Type" Binding="{Binding DataType}"/>
 				<DataGridTextColumn Header="Reserved" Binding="{Binding IsReserved, Converter={StaticResource BoolToYesNoConverter}}"/>
 			</DataGrid.Columns>

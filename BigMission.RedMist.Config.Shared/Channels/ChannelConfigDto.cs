@@ -1,4 +1,5 @@
 ﻿using BigMission.ChannelManagement.Shared;
+using BigMission.RedMist.Config.Shared.Extensions;
 
 namespace BigMission.RedMist.Config.Shared.Channels;
 
@@ -14,6 +15,7 @@ public class ChannelConfigDto
     /// <returns></returns>
     public int IncNextId()
     {
-        return ++NextChannelId;
+        var ids = ChannelMappings.Select(c => c.Id);
+        return ids.NextId();
     }
 }

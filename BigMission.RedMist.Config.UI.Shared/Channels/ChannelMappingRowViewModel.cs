@@ -28,7 +28,10 @@ public partial class ChannelMappingRowViewModel : ObservableObject
             return Data.DataType;
         }
     }
-    public bool IsUsed { get; set; }
+
+    [ObservableProperty]
+    private bool isUsed;
+
     public string? Source { get; set; }
     public bool IsReserved => Data.IsReserved;
 
@@ -43,9 +46,9 @@ public partial class ChannelMappingRowViewModel : ObservableObject
         if (obj is ChannelMappingDto map)
         {
             var copyMap = map.Copy();
-            var chVm = new ChannelMappingViewModel(copyMap, [.. ParentVm?.Channels]);
+            var chVm = new ChannelMappingEditViewModel(copyMap, [.. ParentVm?.Channels]);
             var result = await DialogHost.Show(chVm, "MainDialogHost");
-            if (result is ChannelMappingViewModel editedMap)
+            if (result is ChannelMappingEditViewModel editedMap)
             {
                 ParentVm?.UpdateChannelMapping(this, editedMap.Data);
             }

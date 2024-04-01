@@ -1,18 +1,16 @@
-﻿using BigMission.Avalonia.Utilities;
-using BigMission.ChannelManagement.Shared;
+﻿using BigMission.ChannelManagement.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using DialogHostAvalonia;
+using MsBox.Avalonia;
 using MsBox.Avalonia.Dto;
 using MsBox.Avalonia.Enums;
 using MsBox.Avalonia.Models;
-using MsBox.Avalonia;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reactive.Linq;
-using UnitsNet;
 using System.Text;
-using DialogHostAvalonia;
-using System.Collections.Immutable;
-using System.Reflection.Metadata.Ecma335;
+using UnitsNet;
 
 namespace BigMission.RedMist.Config.UI.Shared.Channels;
 
@@ -20,7 +18,7 @@ namespace BigMission.RedMist.Config.UI.Shared.Channels;
 /// Used for adding or editing a channel mapping.
 /// </summary>
 [NotifyDataErrorInfo]
-public partial class ChannelMappingViewModel : ObservableValidator
+public partial class ChannelMappingEditViewModel : ObservableValidator
 {
     private readonly ChannelMappingDto data;
     public ChannelMappingDto Data => data;
@@ -40,14 +38,14 @@ public partial class ChannelMappingViewModel : ObservableValidator
 
     [MinLength(1)]
     [MaxLength(30)]
-    [CustomValidation(typeof(ChannelMappingViewModel), nameof(DuplicateNameValidate))]
+    [CustomValidation(typeof(ChannelMappingEditViewModel), nameof(DuplicateNameValidate))]
     public string? Name
     {
         get => Data.Name;
         set => SetProperty(Data.Name, value, Data, (u, n) => u.Name = n, validate: true);
     }
 
-    [CustomValidation(typeof(ChannelMappingViewModel), nameof(DuplicateAbbreviationValidate))]
+    [CustomValidation(typeof(ChannelMappingEditViewModel), nameof(DuplicateAbbreviationValidate))]
     public string? Abbreviation
     {
         get => Data.Abbreviation;
@@ -126,7 +124,7 @@ public partial class ChannelMappingViewModel : ObservableValidator
         set => SetProperty(Data.DisplayDecimalPlaces, value, Data, (u, n) => u.DisplayDecimalPlaces = n, validate: true);
     }
 
-    public ChannelMappingViewModel(ChannelMappingDto data, ImmutableArray<ChannelMappingRowViewModel> parentChannels)
+    public ChannelMappingEditViewModel(ChannelMappingDto data, ImmutableArray<ChannelMappingRowViewModel> parentChannels)
     {
         this.data = data;
         ParentChannels = parentChannels;
@@ -155,7 +153,7 @@ public partial class ChannelMappingViewModel : ObservableValidator
     public static ValidationResult DuplicateNameValidate(string name, ValidationContext context)
     {
         if (string.IsNullOrWhiteSpace(name)) return new ValidationResult(null);
-        if (context.ObjectInstance is not ChannelMappingViewModel map) { return new ValidationResult(null); }
+        if (context.ObjectInstance is not ChannelMappingEditViewModel map) { return new ValidationResult(null); }
         name = name.Trim();
 
         // Remove the current channel from the list of existing names
@@ -175,7 +173,7 @@ public partial class ChannelMappingViewModel : ObservableValidator
     public static ValidationResult DuplicateAbbreviationValidate(string abbreviation, ValidationContext context)
     {
         if (string.IsNullOrWhiteSpace(abbreviation)) return ValidationResult.Success!;
-        if (context.ObjectInstance is not ChannelMappingViewModel map) { return new ValidationResult(null); }
+        if (context.ObjectInstance is not ChannelMappingEditViewModel map) { return new ValidationResult(null); }
         abbreviation = abbreviation.Trim();
         if (abbreviation.Length > 5) return new ValidationResult("Abbreviation must be 5 characters or less.");
 

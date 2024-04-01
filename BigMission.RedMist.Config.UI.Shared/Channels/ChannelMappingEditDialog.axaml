@@ -6,7 +6,7 @@
 			 xmlns:dialog="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:Class="BigMission.RedMist.Config.UI.Shared.Channels.ChannelMappingEditDialog"
-			 x:DataType="ch:ChannelMappingViewModel">
+			 x:DataType="ch:ChannelMappingEditViewModel">
 	<StackPanel>
 		<TextBlock Classes="theme-text-heading" Text="Add/Edit Channel" Margin="4"/>
 		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"

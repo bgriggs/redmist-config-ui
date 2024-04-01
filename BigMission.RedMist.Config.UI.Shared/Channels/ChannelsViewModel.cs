@@ -11,7 +11,8 @@ namespace BigMission.RedMist.Config.UI.Shared.Channels;
 public partial class ChannelsViewModel : ObservableValidator
 {
     private readonly ChannelConfigDto data;
-    
+    private readonly ChannelProvider channelProvider;
+
     public LargeObservableCollection<ChannelMappingRowViewModel> Channels { get; } = [];
 
     private string searchText = string.Empty;
@@ -25,9 +26,10 @@ public partial class ChannelsViewModel : ObservableValidator
         }
     }
 
-    public ChannelsViewModel(ChannelConfigDto channelConfigDto)
+    public ChannelsViewModel(ChannelConfigDto channelConfigDto, ChannelProvider channelProvider)
     {
         data = channelConfigDto;
+        this.channelProvider = channelProvider;
         InitializeChannelViewModels();
         Channels.CollectionChanged += Channels_CollectionChanged;
     }
@@ -62,8 +64,8 @@ public partial class ChannelsViewModel : ObservableValidator
     public async Task AddChannelClick()
     {
         var dto = new ChannelMappingDto { DataType = "Temperature", BaseUnitType = "DegreesFahrenheit", DisplayUnitType = "DegreesFahrenheit" };
-        var result = await DialogHost.Show(new ChannelMappingViewModel(dto, [..Channels]), "MainDialogHost");
-        if (result is ChannelMappingViewModel map)
+        var result = await DialogHost.Show(new ChannelMappingEditViewModel(dto, [.. Channels]), "MainDialogHost");
+        if (result is ChannelMappingEditViewModel map)
         {
             map.Data.Id = data.IncNextId();
             var rowVm = new ChannelMappingRowViewModel(map.Data, this);
@@ -112,5 +114,15 @@ public partial class ChannelsViewModel : ObservableValidator
     {
         SearchText = string.Empty;
         return true;
+    }
+
+    public void RefreshIsUsed()
+    {
+        var channelDependencies = channelProvider.GetChannelDependencies();
+        foreach (var row in Channels)
+        {
+            var used = channelDependencies.Any(c => c.ChannelId == row.Data.Id);
+            row.IsUsed = used;
+        }
     }
 }
