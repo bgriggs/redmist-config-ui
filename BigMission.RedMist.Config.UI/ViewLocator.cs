@@ -32,6 +32,7 @@ public class ViewLocator : IDataTemplate
         RegisterViewFactory<CanChannelSelectionDialogViewModel, CanChannelSelectionDialog>();
         RegisterViewFactory<ChannelSelectionControlViewModel, ChannelSelectionControl>();
         RegisterViewFactory<ChannelSelectionDialogViewModel, ChannelSelectionDialog>();
+        RegisterViewFactory<ChannelMappingDetailsViewModel, ChannelDetailsDialog>();
     }
 
     public Control Build(object? data)

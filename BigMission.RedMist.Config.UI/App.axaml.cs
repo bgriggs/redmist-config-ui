@@ -100,5 +100,6 @@ public partial class App : Application
     [Singleton(typeof(ChannelSelectionControl))]
     [Singleton(typeof(ChannelSelectionDialog))]
     [Singleton(typeof(ChannelMappingEditDialog))]
+    [Singleton(typeof(ChannelDetailsDialog))]
     internal static partial void ConfigureViews(IServiceCollection services);
 }

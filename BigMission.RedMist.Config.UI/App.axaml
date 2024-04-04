@@ -60,7 +60,7 @@
 				<Setter.Value>
 					<Template>
 						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="Cancel" VerticalAlignment="Center"/>
+							<TextBlock Text="Close" VerticalAlignment="Center"/>
 							<Image Source="{StaticResource closeicon}" Width="11" Margin="4,2,0,0"/>
 						</StackPanel>
 					</Template>

@@ -1,4 +1,7 @@
-﻿using BigMission.ChannelManagement.Shared;
+﻿using ActiproSoftware.Properties.Shared;
+using BigMission.Avalonia.Utilities;
+using BigMission.ChannelManagement.Shared;
+using BigMission.RedMist.Config.Shared.Channels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DialogHostAvalonia;
 using MsBox.Avalonia;
@@ -82,7 +85,7 @@ public partial class ChannelMappingEditViewModel : ObservableValidator
     public KeyValueViewModel? SelectedBaseUnits
     {
         get => Units.FirstOrDefault(d => d.Value == Data.BaseUnitType);
-        set 
+        set
         {
             //SetProperty(Data.BaseUnitType, value?.Value, Data, (u, n) => u.BaseUnitType = n, validate: true);
             ValidateProperty(value, nameof(SelectedBaseUnits));
@@ -124,7 +127,9 @@ public partial class ChannelMappingEditViewModel : ObservableValidator
         set => SetProperty(Data.DisplayDecimalPlaces, value, Data, (u, n) => u.DisplayDecimalPlaces = n, validate: true);
     }
 
-    public ChannelMappingEditViewModel(ChannelMappingDto data, ImmutableArray<ChannelMappingRowViewModel> parentChannels)
+    
+
+    public ChannelMappingEditViewModel(ChannelMappingDto data, ImmutableArray<ChannelMappingRowViewModel> parentChannels, ChannelProvider? channelProvider)
     {
         this.data = data;
         ParentChannels = parentChannels;

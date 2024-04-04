@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ch="clr-namespace:BigMission.RedMist.Config.UI.Shared.Channels"
+			 xmlns:dialog="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="350"
+             x:Class="BigMission.RedMist.Config.UI.Shared.Channels.ChannelDetailsDialog"
+			 x:DataType="ch:ChannelMappingDetailsViewModel">
+	<StackPanel>
+		<TextBlock Classes="theme-text-heading" Text="Channel Details" Margin="4"/>
+		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto,*" Margin="10">
+			<!--Name-->
+			<TextBlock Text="Name:" Classes="form"/>
+			<TextBlock Grid.Column="1" Classes="form" Text="{Binding Name}"/>
+
+			<!--Source(s)-->
+			<TextBlock Text="Source:" Classes="form" Grid.Row="1"/>
+			<!--<TextBlock Grid.Row="1" Grid.Column="1" Classes="form" Text="{Binding Sources.Count}"/>-->
+			<ItemsControl ItemsSource="{Binding Sources}" Grid.Row="1" Grid.Column="1">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Description}"/>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+			
+			<!--Dependencies-->
+			<TextBlock Text="Dependencies:" Classes="form" Grid.Row="3"/>
+			<!--<TextBlock Grid.Row="3" Grid.Column="1" Classes="form" Text="{Binding Dependencies.Count}"/>-->
+			<ItemsControl ItemsSource="{Binding Dependencies}" Grid.Row="3" Grid.Column="1">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Description}"/>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+			
+		</Grid>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Classes="close" Margin="3"
+					Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialog:DialogHost}, Path=CloseDialogCommand}"/>
+		</StackPanel>
+	</StackPanel>
+</UserControl>

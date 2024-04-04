@@ -46,7 +46,7 @@ public partial class ChannelMappingRowViewModel : ObservableObject
         if (obj is ChannelMappingDto map)
         {
             var copyMap = map.Copy();
-            var chVm = new ChannelMappingEditViewModel(copyMap, [.. ParentVm?.Channels]);
+            var chVm = new ChannelMappingEditViewModel(copyMap, [.. ParentVm?.Channels], ParentVm?.ChannelProvider);
             var result = await DialogHost.Show(chVm, "MainDialogHost");
             if (result is ChannelMappingEditViewModel editedMap)
             {

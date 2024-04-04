@@ -26,6 +26,8 @@ public partial class ChannelsViewModel : ObservableValidator
         }
     }
 
+    public ChannelProvider ChannelProvider => channelProvider;
+
     public ChannelsViewModel(ChannelConfigDto channelConfigDto, ChannelProvider channelProvider)
     {
         data = channelConfigDto;
@@ -64,7 +66,7 @@ public partial class ChannelsViewModel : ObservableValidator
     public async Task AddChannelClick()
     {
         var dto = new ChannelMappingDto { DataType = "Temperature", BaseUnitType = "DegreesFahrenheit", DisplayUnitType = "DegreesFahrenheit" };
-        var result = await DialogHost.Show(new ChannelMappingEditViewModel(dto, [.. Channels]), "MainDialogHost");
+        var result = await DialogHost.Show(new ChannelMappingEditViewModel(dto, [.. Channels], channelProvider), "MainDialogHost");
         if (result is ChannelMappingEditViewModel map)
         {
             map.Data.Id = data.IncNextId();
@@ -118,7 +120,7 @@ public partial class ChannelsViewModel : ObservableValidator
 
     public void RefreshIsUsed()
     {
-        var channelDependencies = channelProvider.GetChannelDependencies();
+        var channelDependencies = ChannelProvider.GetChannelDependencies();
         foreach (var row in Channels)
         {
             var used = channelDependencies.Any(c => c.ChannelId == row.Data.Id);
