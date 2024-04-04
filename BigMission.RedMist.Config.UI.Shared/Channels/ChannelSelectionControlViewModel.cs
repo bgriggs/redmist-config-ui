@@ -52,11 +52,6 @@ public partial class ChannelSelectionControlViewModel : ObservableObject
 
     public async Task ChannelDetails()
     {
-        if (SelectedChannelMapping is null)
-        {
-            return;
-        }
-
         // When in selection mode, open the selection dialog
         if (IsSelectable)
         {
@@ -64,6 +59,11 @@ public partial class ChannelSelectionControlViewModel : ObservableObject
         }
         else // When in readonly mode, show the channel details
         {
+            if (SelectedChannelMapping is null)
+            {
+                return;
+            }
+
             var dialogHost = "MainDialogHost";
             if (DialogHost.IsDialogOpen(dialogHost))
             {
