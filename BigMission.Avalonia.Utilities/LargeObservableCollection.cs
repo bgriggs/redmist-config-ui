@@ -3,10 +3,9 @@ using System.Collections.Specialized;
 
 namespace BigMission.Avalonia.Utilities;
 
-
 /// <summary>
 /// Provides optimizations to observable collection for working with
-/// large number of adds and removes.  You can add/remove many items 
+/// large number of adds and removes. You can add/remove many items 
 /// and only raise one update event.
 /// </summary>
 public class LargeObservableCollection<T> : ObservableCollection<T>
@@ -62,13 +61,6 @@ public class LargeObservableCollection<T> : ObservableCollection<T>
         }
     }
 
-    /// <summary>
-    /// This method does not work in a BulkOperation
-    /// if the collection is already in a BulkOperation
-    /// then this method will not end that BulkOperation
-    /// leaving it to the caller to end the BulkOperation
-    /// </summary>
-    /// <param name="items"></param>
     public void AddRange(IEnumerable<T> items)
     {
         bool clearBulkOperation = false;

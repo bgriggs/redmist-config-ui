@@ -50,6 +50,9 @@ public partial class ChannelSelectionControlViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Open channel details dialog when in readonly mode, or open the selection dialog when in selection mode.
+    /// </summary>
     public async Task ChannelDetails()
     {
         // When in selection mode, open the selection dialog
