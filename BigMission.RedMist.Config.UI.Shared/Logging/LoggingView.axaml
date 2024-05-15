@@ -19,6 +19,8 @@
 					<Image Source="{StaticResource addicon}" Width="12" Margin="4,0,0,0"/>
 				</StackPanel>
 			</Button>
+			<Button Content="Import" Margin="4" Command="{Binding ImportAsync}" CommandParameter="{Binding #root}"/>
+			<Button Content="Export" Margin="4" Command="{Binding ExportAsync}" CommandParameter="{Binding #root}"/>
 		</StackPanel>
 
 		<DataGrid x:Name="dataGrid" Grid.Row="2" Margin="3,10,3,3" ItemsSource="{Binding LogEntries}" MinHeight="150"
@@ -37,14 +39,14 @@
 				<DataGridTemplateColumn Header="Logging Frequency">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<ComboBox ItemsSource="{Binding Frequencies}" SelectedItem="{Binding SelectedFrequency}" DisplayMemberBinding="{Binding Name}"/>
+							<ComboBox ItemsSource="{Binding Frequencies}" SelectedItem="{Binding SelectedFrequency}" DisplayMemberBinding="{Binding Name}" Margin="2"/>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 				<DataGridTemplateColumn Header="">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button Command="{Binding #root.DataContext.RemoveLogEntry}" CommandParameter="{Binding}" Margin="0,3,3,3">
+							<Button Command="{Binding #root.DataContext.RemoveLogEntry}" CommandParameter="{Binding}" Margin="0,3,3,3" ToolTip.Tip="Delete channel logging">
 								<StackPanel Orientation="Horizontal">
 									<Image Source="{StaticResource closeicon}" Width="12"/>
 								</StackPanel>
