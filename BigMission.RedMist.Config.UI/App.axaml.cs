@@ -6,9 +6,11 @@ using BigMission.Avalonia.LogViewer.Extensions;
 using BigMission.RedMist.Config.Shared;
 using BigMission.RedMist.Config.Shared.CanBus;
 using BigMission.RedMist.Config.Shared.Channels;
+using BigMission.RedMist.Config.Shared.Logging;
 using BigMission.RedMist.Config.UI.Shared.CanBus;
 using BigMission.RedMist.Config.UI.Shared.Channels;
 using BigMission.RedMist.Config.UI.Shared.General;
+using BigMission.RedMist.Config.UI.Shared.Logging;
 using BigMission.RedMist.Config.UI.ViewModels;
 using BigMission.RedMist.Config.UI.Views;
 using CommunityToolkit.Extensions.DependencyInjection;
@@ -39,10 +41,10 @@ public partial class App : Application
         builder.AddLogViewer().Logging.AddDefaultDataStoreLogger();
 
         var services = builder.Services;
-        //services.AddHostedService<UdpService>();
-        //services.AddHostedService<DataCloudForwarder>();
         services.AddSingleton<DriverSyncConfigurationProvider>();
         services.AddSingleton<IDriverSyncConfigurationProvider>(s => s.GetRequiredService<DriverSyncConfigurationProvider>());
+        services.AddSingleton<IChannelDependencyCheck, CanBusChannelDependencyCheck>();
+        services.AddSingleton<IChannelDependencyCheck, LogChannelDependencyCheck>();
         ConfigureServices(services);
         ConfigureViewModels(services);
         ConfigureViews(services);
@@ -81,14 +83,9 @@ public partial class App : Application
         => _ = _host!.StopAsync(_cancellationTokenSource!.Token);
 
     [Singleton(typeof(ChannelProvider))]
-    [Singleton(typeof(CanBusChannelDependencyCheck), typeof(IChannelDependencyCheck))]
     internal static partial void ConfigureServices(IServiceCollection services);
 
     [Singleton(typeof(MainViewModel))]
-    //[Singleton(typeof(CanBusViewModel))]
-    //[Singleton(typeof(ChannelsViewModel))]
-    //[Singleton(typeof(GeneralViewModel))]
-    //[Singleton(typeof(QuarterViewModelFactory), typeof(IQuarterViewModelFactory))]
     internal static partial void ConfigureViewModels(IServiceCollection services);
 
     [Singleton(typeof(MainView))]
@@ -101,5 +98,6 @@ public partial class App : Application
     [Singleton(typeof(ChannelSelectionDialog))]
     [Singleton(typeof(ChannelMappingEditDialog))]
     [Singleton(typeof(ChannelDetailsDialog))]
+    [Singleton(typeof(LoggingView))]
     internal static partial void ConfigureViews(IServiceCollection services);
 }

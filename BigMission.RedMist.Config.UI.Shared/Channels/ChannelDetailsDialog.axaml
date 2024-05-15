@@ -12,12 +12,12 @@
 		<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto,*" Margin="10">
 			<!--Name-->
 			<TextBlock Text="Name:" Classes="form"/>
-			<TextBlock Grid.Column="1" Classes="form" Text="{Binding Name}"/>
+			<TextBlock Grid.Column="1" Classes="form" Text="{Binding Name}" Margin="1,0,0,0"/>
 
 			<!--Source(s)-->
-			<TextBlock Text="Source:" Classes="form" Grid.Row="1"/>
+			<TextBlock Text="Source:" Classes="form" Grid.Row="1" VerticalAlignment="Top"/>
 			<!--<TextBlock Grid.Row="1" Grid.Column="1" Classes="form" Text="{Binding Sources.Count}"/>-->
-			<ItemsControl ItemsSource="{Binding Sources}" Grid.Row="1" Grid.Column="1">
+			<ItemsControl ItemsSource="{Binding Sources}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding Description}"/>
@@ -26,9 +26,9 @@
 			</ItemsControl>
 			
 			<!--Dependencies-->
-			<TextBlock Text="Dependencies:" Classes="form" Grid.Row="3"/>
+			<TextBlock Text="Dependencies:" Classes="form" Grid.Row="3" VerticalAlignment="Top"/>
 			<!--<TextBlock Grid.Row="3" Grid.Column="1" Classes="form" Text="{Binding Dependencies.Count}"/>-->
-			<ItemsControl ItemsSource="{Binding Dependencies}" Grid.Row="3" Grid.Column="1">
+			<ItemsControl ItemsSource="{Binding Dependencies}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding Description}"/>

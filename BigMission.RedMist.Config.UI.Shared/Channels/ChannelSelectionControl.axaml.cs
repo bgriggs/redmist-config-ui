@@ -1,4 +1,3 @@
-using Avalonia;
 using Avalonia.Controls;
 
 namespace BigMission.RedMist.Config.UI.Shared.Channels

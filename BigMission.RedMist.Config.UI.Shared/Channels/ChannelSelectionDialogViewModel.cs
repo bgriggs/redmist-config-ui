@@ -2,12 +2,15 @@
 using BigMission.ChannelManagement.Shared;
 using BigMission.RedMist.Config.Shared.Channels;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.Immutable;
 
 namespace BigMission.RedMist.Config.UI.Shared.Channels;
 
 public partial class ChannelSelectionDialogViewModel : ObservableObject
 {
     private readonly ChannelProvider channelProvider;
+    private readonly int[] excludedChannelIds = [];
+
     private LargeObservableCollection<ChannelMappingRowViewModel> Channels { get; } = [];
 
     private string searchText = string.Empty;
@@ -34,6 +37,11 @@ public partial class ChannelSelectionDialogViewModel : ObservableObject
         PropertyChanged += ChannelSelectionDialogViewModel_PropertyChanged;
     }
 
+    public ChannelSelectionDialogViewModel(ChannelProvider channelProvider, int[] excludedChannelIds) : this(channelProvider)
+    {
+        this.excludedChannelIds = excludedChannelIds;
+    }
+
     private void ChannelSelectionDialogViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(HideUsedChannels))
@@ -48,11 +56,21 @@ public partial class ChannelSelectionDialogViewModel : ObservableObject
         var chDtos = new List<ChannelMappingDto>();
         if (HideUsedChannels)
         {
-            chDtos.AddRange(channelProvider.GetUnusedChannels());
+            var channels = channelProvider.GetUnusedChannels();
+            if (excludedChannelIds.Length > 0)
+            {
+                channels = channels.Where(c => !excludedChannelIds.Contains(c.Id)).ToImmutableArray();
+            }
+            chDtos.AddRange(channels);
         }
         else
         {
-            chDtos.AddRange(channelProvider.GetAllChannels());
+            var channels = channelProvider.GetAllChannels();
+            if (excludedChannelIds.Length > 0)
+            {
+                channels = channels.Where(c => !excludedChannelIds.Contains(c.Id)).ToImmutableArray();
+            }
+            chDtos.AddRange(channels);
         }
 
         Channels.BeginBulkOperation();

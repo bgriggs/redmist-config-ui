@@ -1,8 +1,10 @@
 ﻿using BigMission.RedMist.Config.Shared;
 using BigMission.RedMist.Config.Shared.Channels;
+using BigMission.RedMist.Config.Shared.Logging;
 using BigMission.RedMist.Config.UI.Shared.CanBus;
 using BigMission.RedMist.Config.UI.Shared.Channels;
 using BigMission.RedMist.Config.UI.Shared.General;
+using BigMission.RedMist.Config.UI.Shared.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 
@@ -16,6 +18,8 @@ public partial class MainViewModel : ObservableObject
     private ChannelsViewModel? channelsViewModel;
     [ObservableProperty]
     private ObservableCollection<CanBusViewModel> canBusViewModels;
+    [ObservableProperty]
+    private LoggingViewModel? loggingViewModel;
     private readonly IDriverSyncConfigurationProvider configurationProvider;
     private readonly ChannelProvider channelProvider;
 
@@ -44,5 +48,7 @@ public partial class MainViewModel : ObservableObject
         {
             CanBusViewModels.Add(new CanBusViewModel(config.CanBusConfigs[i], channelProvider) { Name = $"CAN {i + 1}" });
         }
+
+        LoggingViewModel = new LoggingViewModel(config.LoggingConfig, channelProvider);
     }
 }

@@ -3,6 +3,7 @@ using Avalonia.Controls.Templates;
 using BigMission.RedMist.Config.UI.Shared.CanBus;
 using BigMission.RedMist.Config.UI.Shared.Channels;
 using BigMission.RedMist.Config.UI.Shared.General;
+using BigMission.RedMist.Config.UI.Shared.Logging;
 using BigMission.RedMist.Config.UI.ViewModels;
 using BigMission.RedMist.Config.UI.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -33,6 +34,7 @@ public class ViewLocator : IDataTemplate
         RegisterViewFactory<ChannelSelectionControlViewModel, ChannelSelectionControl>();
         RegisterViewFactory<ChannelSelectionDialogViewModel, ChannelSelectionDialog>();
         RegisterViewFactory<ChannelMappingDetailsViewModel, ChannelDetailsDialog>();
+        RegisterViewFactory<LoggingViewModel, LoggingView>();
     }
 
     public Control Build(object? data)

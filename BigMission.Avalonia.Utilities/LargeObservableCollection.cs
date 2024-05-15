@@ -83,6 +83,10 @@ public class LargeObservableCollection<T> : ObservableCollection<T>
         }
     }
 
+    /// <summary>
+    /// Clears collection and adds all items.
+    /// </summary>
+    /// <param name="items"></param>
     public void SetRange(IEnumerable<T> items)
     {
         bool clearBulkOperation = false;

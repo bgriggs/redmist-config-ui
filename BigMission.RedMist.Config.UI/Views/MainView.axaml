@@ -6,6 +6,7 @@
 			 xmlns:ch="clr-namespace:BigMission.RedMist.Config.UI.Shared.Channels;assembly=BigMission.RedMist.Config.UI.Shared"
 			 xmlns:gen="clr-namespace:BigMission.RedMist.Config.UI.Shared.General;assembly=BigMission.RedMist.Config.UI.Shared"
 			 xmlns:cb="clr-namespace:BigMission.RedMist.Config.UI.Shared.CanBus;assembly=BigMission.RedMist.Config.UI.Shared"
+			 xmlns:log="clr-namespace:BigMission.RedMist.Config.UI.Shared.Logging;assembly=BigMission.RedMist.Config.UI.Shared"
 			 xmlns:ac="clr-namespace:BigMission.RedMist.Config.UI.Shared.AimCanMessageConstructor;assembly=BigMission.RedMist.Config.UI.Shared"
 			 xmlns:dialog="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
 			 xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
@@ -38,13 +39,13 @@
 					<TabItem Header="Channels">
 						<ch:ChannelsView DataContext="{Binding ChannelsViewModel}"/>
 					</TabItem>
-					<TabItem Header="CAN Bus" IsSelected="True">
+					<TabItem Header="CAN Bus">
 						<cb:CanBusView/>
-						<!--<ContentControl Grid.Row="1" Content="{Binding CanBusViewModel}"/>-->
 					</TabItem>
 					<TabItem Header="Math">
 					</TabItem>
-					<TabItem Header="Logging">
+					<TabItem Header="Logging" IsSelected="True">
+						<log:LoggingView DataContext="{Binding LoggingViewModel}"/>
 					</TabItem>
 					<TabItem Header="Telemetry">
 					</TabItem>

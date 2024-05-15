@@ -61,8 +61,6 @@ namespace BigMission.RedMist.Config.UI.Shared.Channels
             {
                 await rvm.DeleteChannel(rvm.Data);
             }
-        }
-
-        
+        }        
     }
 }

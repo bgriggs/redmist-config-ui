@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:c="clr-namespace:BigMission.RedMist.Config.UI.Shared.Channels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BigMission.RedMist.Config.UI.Shared.Logging.LoggingView"
+			 x:Name="root">
+	<Grid RowDefinitions="Auto,Auto,*">
+		<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="3">
+			<TextBlock Text="Rolling Log:" Classes="form" Margin="3,3,3,3"/>
+			<ToggleSwitch IsChecked="{Binding EnableRollingLog}" OnContent="Yes (delete oldest when full)" OffContent="No (stop when full)" Classes="form"/>
+		</StackPanel>
+
+		<StackPanel Orientation="Horizontal" Grid.Row="1" Margin="3">
+			<Button Command="{Binding AddMessageClick}" Margin="0,3,3,3" HorizontalAlignment="Left">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="Add Channel" VerticalAlignment="Center"/>
+					<Image Source="{StaticResource addicon}" Width="12" Margin="4,0,0,0"/>
+				</StackPanel>
+			</Button>
+		</StackPanel>
+
+		<DataGrid x:Name="dataGrid" Grid.Row="2" Margin="3,10,3,3" ItemsSource="{Binding LogEntries}" MinHeight="150"
+				  CanUserSortColumns="False" SelectionMode="Single" IsReadOnly="True"
+				  BorderThickness="1" BorderBrush="Gray"
+				  KeyUp="DataGrid_KeyUp">
+
+			<DataGrid.Columns>
+				<DataGridTemplateColumn Header="Channel">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<c:ChannelSelectionControl DataContext="{Binding ChannelViewModel}"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="Logging Frequency">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<ComboBox ItemsSource="{Binding Frequencies}" SelectedItem="{Binding SelectedFrequency}" DisplayMemberBinding="{Binding Name}"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button Command="{Binding #root.DataContext.RemoveLogEntry}" CommandParameter="{Binding}" Margin="0,3,3,3">
+								<StackPanel Orientation="Horizontal">
+									<Image Source="{StaticResource closeicon}" Width="12"/>
+								</StackPanel>
+							</Button>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+</UserControl>

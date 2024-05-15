@@ -1,9 +1,7 @@
-﻿using Avalonia.Controls.Primitives;
-using BigMission.ChannelManagement.Shared;
+﻿using BigMission.ChannelManagement.Shared;
 using BigMission.RedMist.Config.Shared.Channels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DialogHostAvalonia;
-using System.Collections.Immutable;
 
 namespace BigMission.RedMist.Config.UI.Shared.Channels;
 

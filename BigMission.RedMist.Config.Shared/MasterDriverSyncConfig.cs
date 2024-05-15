@@ -1,6 +1,7 @@
 ﻿using BigMission.RedMist.Config.Shared.CanBus;
 using BigMission.RedMist.Config.Shared.Channels;
 using BigMission.RedMist.Config.Shared.General;
+using BigMission.RedMist.Config.Shared.Logging;
 using Newtonsoft.Json;
 
 namespace BigMission.RedMist.Config.Shared;
@@ -11,6 +12,8 @@ public class MasterDriverSyncConfig
     public GeneralConfigDto GeneralConfig { get; set; } = new();
     public ChannelConfigDto ChannelConfig { get; set; } = new();
     public List<CanBusConfigDto> CanBusConfigs { get; set; } = [];
+    public LoggingConfigDto LoggingConfig { get; set; } = new();
+
 
     public string Serialize()
     {
