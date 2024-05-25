@@ -25,6 +25,8 @@
 
 			<Grid RowDefinitions="Auto,*">
 				<StackPanel Orientation="Horizontal">
+					<ComboBox></ComboBox>
+					<Button Content="Devices"/>
 					<Button Content="Get Configuration"/>
 					<Button Content="Send Configuration"/>
 					<Button Content="Save" Click="SaveFileButton_Clicked"/>

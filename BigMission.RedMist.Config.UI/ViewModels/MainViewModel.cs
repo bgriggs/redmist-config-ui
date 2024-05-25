@@ -1,6 +1,5 @@
 ﻿using BigMission.RedMist.Config.Shared;
 using BigMission.RedMist.Config.Shared.Channels;
-using BigMission.RedMist.Config.Shared.Logging;
 using BigMission.RedMist.Config.UI.Shared.CanBus;
 using BigMission.RedMist.Config.UI.Shared.Channels;
 using BigMission.RedMist.Config.UI.Shared.General;
