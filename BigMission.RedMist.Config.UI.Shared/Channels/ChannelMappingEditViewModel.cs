@@ -1,6 +1,4 @@
-﻿using ActiproSoftware.Properties.Shared;
-using BigMission.Avalonia.Utilities;
-using BigMission.ChannelManagement.Shared;
+﻿using BigMission.ChannelManagement;
 using BigMission.RedMist.Config.Shared.Channels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DialogHostAvalonia;
@@ -45,14 +43,14 @@ public partial class ChannelMappingEditViewModel : ObservableValidator
     public string? Name
     {
         get => Data.Name;
-        set => SetProperty(Data.Name, value, Data, (u, n) => u.Name = n, validate: true);
+        set => SetProperty(Data.Name, value, Data, (u, n) => u.Name = n ?? string.Empty, validate: true);
     }
 
     [CustomValidation(typeof(ChannelMappingEditViewModel), nameof(DuplicateAbbreviationValidate))]
     public string? Abbreviation
     {
         get => Data.Abbreviation;
-        set => SetProperty(Data.Abbreviation, value, Data, (u, n) => u.Abbreviation = n, validate: true);
+        set => SetProperty(Data.Abbreviation, value, Data, (u, n) => u.Abbreviation = n ?? string.Empty, validate: true);
     }
 
     public bool IsStringValue
@@ -70,7 +68,7 @@ public partial class ChannelMappingEditViewModel : ObservableValidator
             ValidateProperty(value, nameof(SelectedDataType));
             if (data.DataType != value?.Value)
             {
-                data.DataType = value?.Value;
+                data.DataType = value?.Value ?? string.Empty;
                 OnPropertyChanged(nameof(SelectedDataType));
                 UpdateUnits();
             }
@@ -91,7 +89,7 @@ public partial class ChannelMappingEditViewModel : ObservableValidator
             ValidateProperty(value, nameof(SelectedBaseUnits));
             if (data.BaseUnitType != value?.Value)
             {
-                data.BaseUnitType = value?.Value;
+                data.BaseUnitType = value?.Value ?? string.Empty;
                 OnPropertyChanged(nameof(SelectedBaseUnits));
             }
         }
@@ -113,7 +111,7 @@ public partial class ChannelMappingEditViewModel : ObservableValidator
             ValidateProperty(value, nameof(SelectedDisplayUnits));
             if (data.DisplayUnitType != value?.Value)
             {
-                data.DisplayUnitType = value?.Value;
+                data.DisplayUnitType = value?.Value ?? string.Empty;
                 OnPropertyChanged(nameof(SelectedDisplayUnits));
             }
             //SetProperty(Data.DisplayUnitType, value?.Value, Data, (u, n) => u.DisplayUnitType = n, validate: true);

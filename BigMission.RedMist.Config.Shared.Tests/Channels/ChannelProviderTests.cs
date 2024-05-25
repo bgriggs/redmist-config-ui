@@ -1,4 +1,4 @@
-﻿using BigMission.ChannelManagement.Shared;
+﻿using BigMission.ChannelManagement;
 using BigMission.RedMist.Config.Shared.Channels;
 using Moq;
 

@@ -1,4 +1,4 @@
-﻿using BigMission.ChannelManagement.Shared;
+﻿using BigMission.ChannelManagement;
 using BigMission.RedMist.Config.Shared.Channels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DialogHostAvalonia;

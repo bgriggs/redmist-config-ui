@@ -1,4 +1,4 @@
-﻿using BigMission.ChannelManagement.Shared;
+﻿using BigMission.ChannelManagement;
 using System.Collections.Immutable;
 using System.Net.WebSockets;
 

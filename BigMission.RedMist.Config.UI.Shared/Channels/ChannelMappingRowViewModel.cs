@@ -1,4 +1,4 @@
-﻿using BigMission.ChannelManagement.Shared;
+﻿using BigMission.ChannelManagement;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DialogHostAvalonia;
 using MsBox.Avalonia;

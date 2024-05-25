@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using BigMission.Avalonia.Utilities;
-using BigMission.ChannelManagement.Shared;
+using BigMission.ChannelManagement;
 using BigMission.RedMist.Config.Shared.Channels;
 using BigMission.RedMist.Config.Shared.Logging;
 using BigMission.RedMist.Config.UI.Shared.Channels;
