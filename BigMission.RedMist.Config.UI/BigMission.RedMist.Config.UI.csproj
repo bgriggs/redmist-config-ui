@@ -13,7 +13,7 @@
 
 
 	<ItemGroup>
-	  <None Remove="Assets\redmist.ico" />
+		<None Remove="Assets\redmist.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -24,6 +24,7 @@
 		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
 		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10" />
 		<PackageReference Include="BigMission.Avalonia.LogViewer" Version="1.0.2" />
+		<PackageReference Include="BigMission.Avalonia.Utilities" Version="1.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.240213-build.1640" />
 
@@ -35,7 +36,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BigMission.Avalonia.Utilities\BigMission.Avalonia.Utilities.csproj" />
-	  <ProjectReference Include="..\BigMission.RedMist.Config.UI.Shared\BigMission.RedMist.Config.UI.Shared.csproj" />
+		<ProjectReference Include="..\BigMission.RedMist.Config.UI.Shared\BigMission.RedMist.Config.UI.Shared.csproj" />
 	</ItemGroup>
 </Project>
