@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BigMission.ChannelManagement.Shared" Version="1.0.1-CI-20240330-013154" />
+    <PackageReference Include="BigMission.ChannelManagement" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 

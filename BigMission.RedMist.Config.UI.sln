@@ -16,14 +16,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EADE85FE-6449-476B-A8E1-29B5015C9903}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		.github\workflows\build.yml = .github\workflows\build.yml
 		nuget.config = nuget.config
-		pipeline-ci.yml = pipeline-ci.yml
 		README.md = README.md
+		release.ps1 = release.ps1
+		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigMission.RedMist.Config.Shared.Tests", "BigMission.RedMist.Config.Shared.Tests\BigMission.RedMist.Config.Shared.Tests.csproj", "{BBCD616F-4130-45E9-A855-30E904388ABF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigMission.RedMist.Config.Shared.Tests", "BigMission.RedMist.Config.Shared.Tests\BigMission.RedMist.Config.Shared.Tests.csproj", "{BBCD616F-4130-45E9-A855-30E904388ABF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigMission.RedMist.Config.UI.Shared.Tests", "BigMission.RedMist.Config.UI.Shared.Tests\BigMission.RedMist.Config.UI.Shared.Tests.csproj", "{5925B5E0-952E-44E8-84C3-02DF420EAAEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigMission.RedMist.Config.UI.Shared.Tests", "BigMission.RedMist.Config.UI.Shared.Tests\BigMission.RedMist.Config.UI.Shared.Tests.csproj", "{5925B5E0-952E-44E8-84C3-02DF420EAAEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
