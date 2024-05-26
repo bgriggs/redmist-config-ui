@@ -1,11 +1,8 @@
-﻿using Avalonia.Controls.Platform;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using BigMission.Avalonia.Utilities;
 using BigMission.RedMist.Config.Shared.AimCanMessageConstructor;
 using CommunityToolkit.Mvvm.ComponentModel;
-using MathNet.Numerics.Distributions;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
